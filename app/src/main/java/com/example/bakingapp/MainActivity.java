@@ -16,12 +16,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bakingapp.InternetUtils.NetworkUtils;
+import com.example.bakingapp.JsonRef.JsonUtils;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
     private final int RECIPE_LOADER_ID = 10;
     private TextView responseTextView;
     private ProgressBar waitTillResponseProgressBar;
@@ -31,9 +34,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
         responseTextView = findViewById(R.id.tv);
         waitTillResponseProgressBar = findViewById(R.id.pb);
-
-
-        LoaderManager.getInstance(this).initLoader(RECIPE_LOADER_ID, null, this).forceLoad();
+        try {
+            List<String> names = JsonUtils.getRecipeNames();
+            responseTextView.setText(names.get(3));
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d(TAG, "There's a problem in JsonUtils.getRecipeNames() method");
+        }
+        //LoaderManager.getInstance(this).initLoader(RECIPE_LOADER_ID, null, this).forceLoad();
     }
 
     @NonNull
@@ -88,7 +96,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(@NonNull Loader<String> loader, String data) {
 
         waitTillResponseProgressBar.setVisibility(View.INVISIBLE);
-        responseTextView.setText(data);
+        //responseTextView.setText(data);
+        JsonUtils.setJsonResponse(data);
+        try {
+            List<String> names = JsonUtils.getRecipeNames();
+            responseTextView.setText(names.get(3));
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d(TAG, "There's a problem in JsonUtils.getRecipeNames() method");
+        }
         Toast.makeText(this, "Loader finished", Toast.LENGTH_SHORT).show();
     }
 
