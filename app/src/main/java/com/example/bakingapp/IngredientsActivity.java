@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import com.example.bakingapp.Adapters.IngredientsAdapter;
+
 public class IngredientsActivity extends AppCompatActivity {
 
     private IngredientsAdapter ingredientsAdapter;

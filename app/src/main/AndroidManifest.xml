@@ -14,15 +14,14 @@
         <activity android:name=".IngredientsActivity"
             android:label="@string/ingredient_activity_label"/>
         <activity android:name=".CookRecipeActivity"
-            android:label="@string/cook_recipe_activity_label">
+            android:label="@string/cook_recipe_activity_label" />
+
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".MainActivity">
-
         </activity>
     </application>
 

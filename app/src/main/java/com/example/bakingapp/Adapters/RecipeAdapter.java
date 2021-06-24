@@ -1,4 +1,4 @@
-package com.example.bakingapp;
+package com.example.bakingapp.Adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bakingapp.R;
+
 import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
@@ -18,9 +20,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     private Context mContext;
     // now I'll just use a temporary list to provide the data for the adapter
     private List<String> recipesName;
+    public interface ChooseRecipeInterface{
+        void onChooseRecipe(int id);
+    }
+    public static ChooseRecipeInterface chooseRecipeInterface;
 
-    public RecipeAdapter(Context mContext) {
+    public RecipeAdapter(Context mContext, ChooseRecipeInterface recipeInterface) {
         this.mContext = mContext;
+        chooseRecipeInterface = recipeInterface;
     }
 
     public void setRecipesName(List<String> recipesName) {
@@ -64,12 +71,18 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             return 0;
     }
 
-    static class RecipeViewHolder extends RecyclerView.ViewHolder{
+    static class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView recipeName;
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             recipeName = itemView.findViewById(R.id.recipeNameTextView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            chooseRecipeInterface.onChooseRecipe(getBindingAdapterPosition());
         }
     }
 }

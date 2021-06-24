@@ -1,4 +1,4 @@
-package com.example.bakingapp;
+package com.example.bakingapp.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bakingapp.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +18,14 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
 
     private Context mContext;
     List<String> stepsList;
-    public StepsAdapter(Context mContext) {
+    public interface ViewStepInterface{
+        void onClickStep(int id);
+    }
+    public static ViewStepInterface viewStepInterface;
+
+    public StepsAdapter(Context mContext, ViewStepInterface stepInterface) {
         this.mContext = mContext;
+        viewStepInterface = stepInterface;
         stepsList = new ArrayList<>();
         stepsList.add("Recipe Introduction");
         stepsList.add("Starting prep");
@@ -46,11 +54,17 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
         else return stepsList.size();
     }
 
-    static class StepsViewHolder extends RecyclerView.ViewHolder{
+    static class StepsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView stepTextView;
         public StepsViewHolder(@NonNull View itemView) {
             super(itemView);
             stepTextView = itemView.findViewById(R.id.recipeStepsTextView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            viewStepInterface.onClickStep(getBindingAdapterPosition());
         }
     }
 }

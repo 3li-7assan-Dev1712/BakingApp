@@ -1,5 +1,6 @@
 package com.example.bakingapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bakingapp.Adapters.RecipeAdapter;
 import com.example.bakingapp.InternetUtils.NetworkUtils;
 import com.example.bakingapp.JsonRef.JsonUtils;
 
@@ -22,7 +24,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>, RecipeAdapter.ChooseRecipeInterface{
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private final int RECIPE_LOADER_ID = 10;
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
          */
         recipesNameRecycler.setHasFixedSize(true);
         recipesNameRecycler.setLayoutManager(new LinearLayoutManager(this));
-        recipeAdapter = new RecipeAdapter(this);
+        recipeAdapter = new RecipeAdapter(this, this);
         recipesNameRecycler.setAdapter(recipeAdapter);
 
         /*
@@ -119,4 +121,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
+    @Override
+    public void onChooseRecipe(int id) {
+        Intent openCookRecipeActivity = new Intent(MainActivity.this, CookRecipeActivity.class);
+        openCookRecipeActivity.putExtra(getString(R.string.open_cook_activity_key), id);
+        startActivity(openCookRecipeActivity);
+    }
 }

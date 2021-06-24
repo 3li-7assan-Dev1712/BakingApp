@@ -10,7 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class CookRecipeActivity extends AppCompatActivity {
+import com.example.bakingapp.Adapters.StepsAdapter;
+
+public class CookRecipeActivity extends AppCompatActivity implements StepsAdapter.ViewStepInterface {
 
     private StepsAdapter stepsAdapter;
     @Override
@@ -21,7 +23,7 @@ public class CookRecipeActivity extends AppCompatActivity {
         RecyclerView stepsRecycler = findViewById(R.id.stepsRecycler);
         stepsRecycler.setLayoutManager(new LinearLayoutManager(this));
         stepsRecycler.setHasFixedSize(true);
-        stepsAdapter = new StepsAdapter(this);
+        stepsAdapter = new StepsAdapter(this, this);
         stepsRecycler.setAdapter(stepsAdapter);
 
         // See Ingredients Button Implementation
@@ -33,5 +35,10 @@ public class CookRecipeActivity extends AppCompatActivity {
                 startActivity(openIngredientsActivity);
             }
         });
+    }
+
+    @Override
+    public void onClickStep(int id) {
+        Toast.makeText(this, "clicked " + id, Toast.LENGTH_SHORT).show();
     }
 }

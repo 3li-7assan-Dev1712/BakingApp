@@ -1,4 +1,4 @@
-package com.example.bakingapp;
+package com.example.bakingapp.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bakingapp.Entries.IngredientEntry;
+import com.example.bakingapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
