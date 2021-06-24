@@ -11,11 +11,11 @@ public class IngredientEntry {
     private int id;
     private String measure;
     private String ingredient;
-    private int quantity;
+    private float quantity;
     @ColumnInfo (name = "recipe_id")
     private int recipeId;
 
-    public IngredientEntry(int id, String measure, String ingredient, int quantity, int recipeId) {
+    public IngredientEntry(int id, String measure, String ingredient, float quantity, int recipeId) {
         this.id = id;
         this.measure = measure;
         this.ingredient = ingredient;
@@ -24,7 +24,7 @@ public class IngredientEntry {
     }
 
     @Ignore
-    public IngredientEntry(String measure, String ingredient, int quantity, int recipeId) {
+    public IngredientEntry(String measure, String ingredient, float quantity, int recipeId) {
         this.measure = measure;
         this.ingredient = ingredient;
         this.quantity = quantity;
@@ -43,7 +43,7 @@ public class IngredientEntry {
         return ingredient;
     }
 
-    public int getQuantity() {
+    public float getQuantity() {
         return quantity;
     }
 

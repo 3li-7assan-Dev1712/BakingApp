@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CookRecipeActivity"
-    xmlns:tools="http://schemas.android.com/tools">
+    tools:context=".CookRecipeActivity">
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,6 +22,7 @@
         app:layout_constraintVertical_bias=".8"
         android:textAllCaps="false"
         android:textColor="@android:color/black"
+        android:text="@string/button_see_ingredients"
         tools:text="@string/button_see_ingredients"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

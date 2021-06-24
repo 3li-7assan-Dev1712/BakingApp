@@ -1,6 +1,7 @@
 package com.example.bakingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -15,5 +16,6 @@ public class IngredientsActivity extends AppCompatActivity {
         RecyclerView ingredientsRecycler = findViewById(R.id.ingredientsRecycler);
         ingredientsAdapter = new IngredientsAdapter(this);
         ingredientsRecycler.setAdapter(ingredientsAdapter);
+        ingredientsRecycler.setLayoutManager(new LinearLayoutManager(this));
     }
 }

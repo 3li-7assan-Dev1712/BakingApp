@@ -1,61 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="5dp"
-    >
-    <LinearLayout
-        android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp"
-        >
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/ingredient_text"
-            style="@style/ingredients_label_text_views"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/measure_text"
-            android:gravity="center_horizontal"
-            android:paddingEnd="8dp"
-            android:paddingStart="1dp"
-            style="@style/ingredients_label_text_views"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/quantity_text"
-            style="@style/ingredients_label_text_views"
-            />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
+        android:text="@string/ingredient_text"
+        style="@style/ingredients_label_text_views"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/IngredientLabel"/>
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:padding="5dp">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:id="@+id/ingredientTextView"/>
-        <TextView
-            android:id="@+id/measureTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="1dp"
-            android:paddingEnd="8dp"
-            android:gravity="center_horizontal" />
-        <TextView
-            android:id="@+id/quantityTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-    </LinearLayout>
+        android:text="@string/measure_text"
+        style="@style/ingredients_label_text_views"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/IngredientLabel"
+        app:layout_constraintRight_toRightOf="@id/quantityLabel"
+        android:id="@+id/measureLabel"
+        app:layout_constraintHorizontal_bias=".7"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/quantity_text"
+        style="@style/ingredients_label_text_views"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/quantityLabel"
+        />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/ingredientTextView"
+        app:layout_constraintTop_toBottomOf="@id/IngredientLabel"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/measureTextView"
+        tools:text="unsalted butter, softened and cut into 1 in. cubes"
+        />
+    <TextView
+        android:id="@+id/measureTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/measureLabel"
+        app:layout_constraintLeft_toLeftOf="@id/measureLabel"
+        app:layout_constraintRight_toRightOf="@id/measureLabel"
+        tools:text="@string/measure_text"/>
+    <TextView
+        android:id="@+id/quantityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/quantityLabel"
+        app:layout_constraintLeft_toLeftOf="@id/quantityLabel"
+        app:layout_constraintRight_toRightOf="@id/quantityLabel"
+        tools:text="@string/quantity_text"
+        />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

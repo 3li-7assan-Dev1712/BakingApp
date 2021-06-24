@@ -9,10 +9,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bakingapp.Entries.IngredientEntry;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientViewHolder> {
     private Context mContext;
+    private List<IngredientEntry> ingredientsList;
     public IngredientsAdapter(Context mContext) {
         this.mContext = mContext;
+        ingredientsList = new ArrayList<>();
+        ingredientsList.add(new IngredientEntry("CUB", "Graham Cracker crumbs", 2, 8));
+        ingredientsList.add(new IngredientEntry("TBLSP", "unsalted butter, melted", 5, 8));
+        ingredientsList.add(new IngredientEntry("CUB", "Graham Cracker crumbs",  0.5f, 8));
     }
 
     @NonNull
@@ -24,12 +34,18 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull IngredientViewHolder holder, int position) {
-
+        String ingredient = ingredientsList.get(position).getIngredient();
+        String measure = ingredientsList.get(position).getMeasure();
+        float quantity = ingredientsList.get(position).getQuantity();
+        holder.ingredient.setText(ingredient);
+        holder.measure.setText(measure);
+        holder.quantity.setText(String.valueOf(quantity));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        if (ingredientsList == null) return 0;
+        else return ingredientsList.size();
     }
 
     static class IngredientViewHolder extends RecyclerView.ViewHolder{
