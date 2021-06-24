@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.AsyncTaskLoader;
 import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bakingapp.InternetUtils.NetworkUtils;
 import com.example.bakingapp.JsonRef.JsonUtils;
@@ -25,22 +26,28 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private final int RECIPE_LOADER_ID = 10;
-    private TextView responseTextView;
+    private RecipeAdapter recipeAdapter;
     private ProgressBar waitTillResponseProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        responseTextView = findViewById(R.id.tv);
         waitTillResponseProgressBar = findViewById(R.id.pb);
-        try {
-            List<String> names = JsonUtils.getRecipeNames();
-            responseTextView.setText(names.get(3));
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.d(TAG, "There's a problem in JsonUtils.getRecipeNames() method");
-        }
-        //LoaderManager.getInstance(this).initLoader(RECIPE_LOADER_ID, null, this).forceLoad();
+        RecyclerView recipesNameRecycler = findViewById(R.id.recipeNameRecyclerView);
+        /*
+        the recipes data are fixed and so recycler view will have fixed size all the time
+        so for performance I going to setHasFixedSize() method to true.
+         */
+        recipesNameRecycler.setHasFixedSize(true);
+        recipesNameRecycler.setLayoutManager(new LinearLayoutManager(this));
+        recipeAdapter = new RecipeAdapter(this);
+        recipesNameRecycler.setAdapter(recipeAdapter);
+
+        /*
+        using the loader to get the recipes data from the internet
+        in a background thread
+         */
+        LoaderManager.getInstance(this).initLoader(RECIPE_LOADER_ID, null, this).forceLoad();
     }
 
     @NonNull
@@ -59,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     @Nullable
                     @Override
                     public String loadInBackground() {
-                        String response = "";
+                        String response;
                         try{
                             assert NetworkUtils.RECIPE_URL != null;
                             response = NetworkUtils.getResponseFromHttpUrl(NetworkUtils.RECIPE_URL);
@@ -74,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     @Nullable
                     @Override
                     protected String onLoadInBackground() {
-                        String response = "";
+                        String response;
                         try{
                             assert NetworkUtils.RECIPE_URL != null;
                             response = NetworkUtils.getResponseFromHttpUrl(NetworkUtils.RECIPE_URL);
@@ -94,17 +101,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(@NonNull Loader<String> loader, String data) {
 
+        Log.d(TAG, "loader has finished");
         waitTillResponseProgressBar.setVisibility(View.INVISIBLE);
-        //responseTextView.setText(data);
-        JsonUtils.setJsonResponse(data);
         try {
-            List<String> names = JsonUtils.getRecipeNames();
-            responseTextView.setText(names.get(3));
+            List<String> names = JsonUtils.getRecipeNames(data);
+            // set the data to the adapter
+            recipeAdapter.setRecipesName(names);
+
+
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d(TAG, "There's a problem in JsonUtils.getRecipeNames() method");
         }
-        Toast.makeText(this, "Loader finished", Toast.LENGTH_SHORT).show();
     }
 
     @Override
