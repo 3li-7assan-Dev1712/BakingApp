@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ public class CookRecipeActivity extends AppCompatActivity {
         RecyclerView stepsRecycler = findViewById(R.id.stepsRecycler);
         stepsRecycler.setLayoutManager(new LinearLayoutManager(this));
         stepsRecycler.setHasFixedSize(true);
+        stepsAdapter = new StepsAdapter(this);
         stepsRecycler.setAdapter(stepsAdapter);
 
         // See Ingredients Button Implementation
@@ -27,7 +29,8 @@ public class CookRecipeActivity extends AppCompatActivity {
         seeIngredientsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // will be implemented in the next commit
+                Intent openIngredientsActivity = new Intent(CookRecipeActivity.this, IngredientsActivity.class);
+                startActivity(openIngredientsActivity);
             }
         });
     }

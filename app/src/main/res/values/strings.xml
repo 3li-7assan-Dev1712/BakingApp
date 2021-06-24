@@ -2,4 +2,9 @@
     <string name="app_name">Baking App</string>
     <string name="bundle_url_key">bundleKeyForUrl</string>
     <string name="button_see_ingredients">See Ingredients</string>
+    <string name="quantity_text">Quantity</string>
+    <string name="measure_text">Measure</string>
+    <string name="ingredient_text">Ingredient</string>
+    <string name="ingredient_activity_label">Recipe Ingredients</string>
+    <string name="cook_recipe_activity_label">Steps &amp; Ingredients</string>
 </resources>
