@@ -40,5 +40,7 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
     @Override
     public void onClickStep(int id) {
         Toast.makeText(this, "clicked " + id, Toast.LENGTH_SHORT).show();
+        Intent goToInstructions = new Intent(CookRecipeActivity.this, InstructionsActivity.class);
+        startActivity(goToInstructions);
     }
 }

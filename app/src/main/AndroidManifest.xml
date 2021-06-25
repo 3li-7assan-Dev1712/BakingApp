@@ -11,11 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".IngredientsActivity"
-            android:label="@string/ingredient_activity_label"/>
-        <activity android:name=".CookRecipeActivity"
+        <activity android:name=".InstructionsActivity"></activity>
+        <activity
+            android:name=".IngredientsActivity"
+            android:label="@string/ingredient_activity_label" />
+        <activity
+            android:name=".CookRecipeActivity"
             android:label="@string/cook_recipe_activity_label" />
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -8,4 +8,5 @@
     <string name="ingredient_activity_label">Recipe Ingredients</string>
     <string name="cook_recipe_activity_label">Steps &amp; Ingredients</string>
     <string name="open_cook_activity_key">openCookActivity</string>
+    <string name="todo">TODO</string>
 </resources>
