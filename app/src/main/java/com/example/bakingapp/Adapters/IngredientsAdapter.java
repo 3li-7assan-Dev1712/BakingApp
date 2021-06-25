@@ -18,12 +18,9 @@ import java.util.List;
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientViewHolder> {
     private Context mContext;
     private List<IngredientEntry> ingredientsList;
-    public IngredientsAdapter(Context mContext) {
+    public IngredientsAdapter(Context mContext, List<IngredientEntry> ingredientsList) {
         this.mContext = mContext;
-        ingredientsList = new ArrayList<>();
-        ingredientsList.add(new IngredientEntry("CUB", "Graham Cracker crumbs", 2, 8));
-        ingredientsList.add(new IngredientEntry("TBLSP", "unsalted butter, melted", 5, 8));
-        ingredientsList.add(new IngredientEntry("CUB", "Graham Cracker crumbs",  0.5f, 8));
+        this.ingredientsList = ingredientsList;
     }
 
     @NonNull

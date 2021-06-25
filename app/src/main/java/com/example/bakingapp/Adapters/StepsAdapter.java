@@ -23,16 +23,10 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
     }
     public static ViewStepInterface viewStepInterface;
 
-    public StepsAdapter(Context mContext, ViewStepInterface stepInterface) {
+    public StepsAdapter(Context mContext, ViewStepInterface stepInterface, List<String> stepsList) {
         this.mContext = mContext;
         viewStepInterface = stepInterface;
-        stepsList = new ArrayList<>();
-        stepsList.add("Recipe Introduction");
-        stepsList.add("Starting prep");
-        stepsList.add("Prep the cookie crust.");
-        stepsList.add("Press the crust into baking form.");
-        stepsList.add("Start filling prep");
-
+        this.stepsList = stepsList;
     }
 
     @NonNull
@@ -44,8 +38,10 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
 
     @Override
     public void onBindViewHolder(@NonNull StepsViewHolder holder, int position) {
-        String step = stepsList.get(position);
-        holder.stepTextView.setText(step);
+       if (stepsList != null){
+           String shortDes = stepsList.get(position);
+           holder.stepTextView.setText(shortDes);
+       }
     }
 
     @Override

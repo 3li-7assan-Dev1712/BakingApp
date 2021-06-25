@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         Log.d(TAG, "loader has finished");
         waitTillResponseProgressBar.setVisibility(View.INVISIBLE);
+        CookRecipeActivity.setJsonRes(data);
         try {
             List<String> names = JsonUtils.getRecipeNames(data);
             // set the data to the adapter
