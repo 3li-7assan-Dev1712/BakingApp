@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bakingapp.Entries.RecipeEntry;
 import com.example.bakingapp.R;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     private static final String TAG = RecipeAdapter.class.getSimpleName();
     private Context mContext;
     // now I'll just use a temporary list to provide the data for the adapter
-    private List<String> recipesName;
+    private List<RecipeEntry> entries;
     public interface ChooseRecipeInterface{
         void onChooseRecipe(int id);
     }
@@ -30,9 +31,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         chooseRecipeInterface = recipeInterface;
     }
 
-    public void setRecipesName(List<String> recipesName) {
-        if (recipesName != null) {
-            this.recipesName = recipesName;
+    public void setRecipesName(List<RecipeEntry> entries) {
+        if (entries != null) {
+            this.entries = entries;
             // to make sure that the adapter will use out updated data I'll:
             Log.d(TAG, "added the data successfully");
             notifyDataSetChanged();
@@ -54,9 +55,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
-        if (recipesName != null){
+        if (entries != null){
             Log.d(TAG, "binding in onBind");
-            String recipeName = recipesName.get(position);
+            String recipeName = entries.get(position).getRecipeName();
             holder.recipeName.setText(recipeName);
         }
         Log.d(TAG, "data == null, cannot bind");
@@ -65,8 +66,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     @Override
     public int getItemCount() {
         Log.d(TAG, "getting count");
-        if (recipesName != null)
-            return recipesName.size();
+        if (entries != null)
+            return entries.size();
         else
             return 0;
     }

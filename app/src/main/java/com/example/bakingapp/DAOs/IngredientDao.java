@@ -13,7 +13,7 @@ public interface IngredientDao {
     @Query("SELECT * FROM IngredientEntry ORDER BY id")
     LiveData<List<IngredientEntry>> loadAllIngredients();
     @Insert()
-    void addIngredient(IngredientEntry entry);
+    void addAllIngredients(List<IngredientEntry> entries);
     @Query("SELECT * FROM IngredientEntry WHERE id = :id")
     LiveData<IngredientEntry> loadIngredientById(int id);
 }

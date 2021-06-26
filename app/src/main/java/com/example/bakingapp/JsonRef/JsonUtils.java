@@ -15,13 +15,13 @@ import java.util.List;
 public class JsonUtils {
 
 
-    public static List<RecipeEntry> getRecipeEntries(String jsonResponse) throws JSONException {
-        List<RecipeEntry> recipeEntries = new ArrayList<>();
+    public static List<String> getRecipesName(String jsonResponse) throws JSONException {
+        List<String> recipeEntries = new ArrayList<>();
         JSONArray recipesArray = new JSONArray(jsonResponse);
         for (int i = 0; i < recipesArray.length(); i ++){
             JSONObject recipeObject = recipesArray.getJSONObject(i);
             String recipeName = recipeObject.getString(JsonConstants.RECIPE_NAME);
-            recipeEntries.add(new RecipeEntry(recipeName));
+            recipeEntries.add(recipeName);
         }
        if (recipeEntries.size() != 0)
            return recipeEntries;

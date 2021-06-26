@@ -13,7 +13,7 @@ public interface StepsDao {
     @Query("SELECT * FROM StepsEntry ORDER BY id")
     LiveData<List<StepsEntry>> loadAllSteps();
     @Insert()
-    void addRecipe(StepsEntry entry);
-    @Query("SELECT * FROM RecipeEntry WHERE id = :id")
+    void addAllSteps(List<StepsEntry> entries);
+    @Query("SELECT * FROM StepsEntry WHERE id = :id")
     LiveData<StepsEntry> loadStepById(int id);
 }

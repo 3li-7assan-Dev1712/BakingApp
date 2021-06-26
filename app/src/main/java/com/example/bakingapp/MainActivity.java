@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.AsyncTaskLoader;
@@ -18,8 +20,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bakingapp.Adapters.RecipeAdapter;
+import com.example.bakingapp.Entries.IngredientEntry;
 import com.example.bakingapp.Entries.RecipeEntry;
+import com.example.bakingapp.Entries.StepsEntry;
 import com.example.bakingapp.InternetUtils.NetworkUtils;
+import com.example.bakingapp.JsonRef.JsonDbUtils;
 import com.example.bakingapp.JsonRef.JsonUtils;
 import com.example.bakingapp.ViewModels.RecipesViewModel;
 import com.example.bakingapp.database.AppExcecuters;
@@ -57,15 +62,34 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         using the loader to get the recipes data from the internet
         in a background thread
          */
+        Log.d("MainActivity", "going to fill dataaaaa");
+        Toast.makeText(this, "Going to fill database", Toast.LENGTH_SHORT).show();
         fillDatabaseIfEmpty();
-        LoaderManager.getInstance(this).initLoader(RECIPE_LOADER_ID, null, this).forceLoad();
+
     }
 
     private void fillDatabaseIfEmpty() {
         // add them to the build.gradle file
-        // //                lifecycle - view model
-        //    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
-        //    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+
+        RecipesViewModel recipesViewModel = new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                return (T) new RecipesViewModel(getApplication());
+            }
+        }.create(RecipesViewModel.class);
+        recipesViewModel.getRecipeEntryLiveData().observe(this, entries -> {
+            if (entries == null || entries.size()== 0) {
+                LoaderManager.getInstance(MainActivity.this).initLoader(RECIPE_LOADER_ID, null, MainActivity.this).forceLoad();
+                Log.d("MainActivity", "entries is null and loader has called");
+                Toast.makeText(MainActivity.this, "entries is null", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                recipeAdapter.setRecipesName(entries);
+                Log.d("MainActivity", "entires has values");
+                Toast.makeText(MainActivity.this, "entries has: " + entries.size() , Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @NonNull
@@ -123,12 +147,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         waitTillResponseProgressBar.setVisibility(View.INVISIBLE);
         CookRecipeActivity.setJsonRes(data);
         try {
-            List<RecipeEntry> entries = JsonUtils.getRecipeEntries(data);
+            List<RecipeEntry> recipeEntries = JsonDbUtils.getRecipeEntries(data);
+            recipeAdapter.setRecipesName(recipeEntries);
+            List<StepsEntry> stepsEntries = JsonDbUtils.getAllSteps(data);
+            List<IngredientEntry> ingredientEntries = JsonDbUtils.getAllIngredients(data);
             // set the data to the adapter
             AppExcecuters.getsInstance().recipeIO().execute(() -> {
 
                 // fill the database
-                mBakingDatabase.recipeDao().addAllRecipe(entries);
+                mBakingDatabase.recipeDao().addAllRecipe(recipeEntries);
+                mBakingDatabase.stepsDao().addAllSteps(stepsEntries);
+                mBakingDatabase.ingredientDao().addAllIngredients(ingredientEntries);
             });
 
 

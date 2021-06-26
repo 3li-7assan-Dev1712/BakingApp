@@ -19,6 +19,7 @@ public class RecipesViewModel extends AndroidViewModel {
         super(application);
         BakingDatabase bakingDatabase = BakingDatabase.getsInstance(this.getApplication());
         recipeEntryLiveData = bakingDatabase.recipeDao().loadAllRecipes();
+
     }
 
     public LiveData<List<RecipeEntry>> getRecipeEntryLiveData() {
