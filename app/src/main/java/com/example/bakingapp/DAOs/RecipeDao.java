@@ -13,7 +13,7 @@ public interface RecipeDao {
     @Query("SELECT * FROM RecipeEntry ORDER BY id")
     LiveData<List<RecipeEntry>> loadAllRecipes();
     @Insert()
-    void addRecipe(RecipeEntry entry);
+    void addAllRecipe(List<RecipeEntry> entries);
     @Query("SELECT * FROM RecipeEntry WHERE id = :id")
     LiveData<RecipeEntry> loadRecipeById(int id);
 }

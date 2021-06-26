@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.AsyncTaskLoader;
 import androidx.loader.content.Loader;
@@ -17,8 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bakingapp.Adapters.RecipeAdapter;
+import com.example.bakingapp.Entries.RecipeEntry;
 import com.example.bakingapp.InternetUtils.NetworkUtils;
 import com.example.bakingapp.JsonRef.JsonUtils;
+import com.example.bakingapp.ViewModels.RecipesViewModel;
+import com.example.bakingapp.database.AppExcecuters;
+import com.example.bakingapp.database.BakingDatabase;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,10 +35,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private final int RECIPE_LOADER_ID = 10;
     private RecipeAdapter recipeAdapter;
     private ProgressBar waitTillResponseProgressBar;
+    private BakingDatabase mBakingDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // construct the mBakingDatabase
+        mBakingDatabase = BakingDatabase.getsInstance(this);
         waitTillResponseProgressBar = findViewById(R.id.pb);
         RecyclerView recipesNameRecycler = findViewById(R.id.recipeNameRecyclerView);
         /*
@@ -49,7 +57,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         using the loader to get the recipes data from the internet
         in a background thread
          */
+        fillDatabaseIfEmpty();
         LoaderManager.getInstance(this).initLoader(RECIPE_LOADER_ID, null, this).forceLoad();
+    }
+
+    private void fillDatabaseIfEmpty() {
+        // add them to the build.gradle file
+        // //                lifecycle - view model
+        //    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
+        //    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
     }
 
     @NonNull
@@ -107,9 +123,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         waitTillResponseProgressBar.setVisibility(View.INVISIBLE);
         CookRecipeActivity.setJsonRes(data);
         try {
-            List<String> names = JsonUtils.getRecipeNames(data);
+            List<RecipeEntry> entries = JsonUtils.getRecipeEntries(data);
             // set the data to the adapter
-            recipeAdapter.setRecipesName(names);
+            AppExcecuters.getsInstance().recipeIO().execute(() -> {
+
+                // fill the database
+                mBakingDatabase.recipeDao().addAllRecipe(entries);
+            });
 
 
         } catch (Exception e) {

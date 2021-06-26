@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.bakingapp.Entries.IngredientEntry;
+import com.example.bakingapp.Entries.RecipeEntry;
 import com.example.bakingapp.JsonRef.JsonConstants;
 
 import java.util.ArrayList;
@@ -14,18 +15,18 @@ import java.util.List;
 public class JsonUtils {
 
 
-    public static List<String> getRecipeNames(String jsonResponse) throws JSONException, Exception {
-        List<String> recipesName = new ArrayList<>();
+    public static List<RecipeEntry> getRecipeEntries(String jsonResponse) throws JSONException {
+        List<RecipeEntry> recipeEntries = new ArrayList<>();
         JSONArray recipesArray = new JSONArray(jsonResponse);
         for (int i = 0; i < recipesArray.length(); i ++){
             JSONObject recipeObject = recipesArray.getJSONObject(i);
             String recipeName = recipeObject.getString(JsonConstants.RECIPE_NAME);
-            recipesName.add(recipeName);
+            recipeEntries.add(new RecipeEntry(recipeName));
         }
-       if (recipesName.size() != 0)
-           return recipesName;
+       if (recipeEntries.size() != 0)
+           return recipeEntries;
        else
-           throw new Exception("Couldn't read from json");
+           throw new JSONException("Couldn't read from json");
     }
 
     public static List<String> getRecipeSteps(String jsonResponse, int recipeId) throws JSONException, Exception {
