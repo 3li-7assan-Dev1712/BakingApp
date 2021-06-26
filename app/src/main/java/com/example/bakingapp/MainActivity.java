@@ -138,7 +138,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         openCookRecipeActivity.putExtra(getString(R.string.open_cook_activity_key), id);
         startActivity(openCookRecipeActivity);
     }
-    private final String JsonRes = "[\n" +
+
+    private static final String JsonRes = "[\n" +
             "  {\n" +
             "    \"id\": 1,\n" +
             "    \"name\": \"Nutella Pie\",\n" +
@@ -671,4 +672,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             "    \"image\": \"\"\n" +
             "  }\n" +
             "]\n";
+    public static String getJsonRes(){
+        return MainActivity.JsonRes;
+    }
 }
