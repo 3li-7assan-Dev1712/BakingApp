@@ -28,7 +28,7 @@ public class InstructionsActivity extends AppCompatActivity {
     private int stepsNumber;
     private SimpleExoPlayer mSimpleExoPlayer;
     private PlayerView mPlayerView;
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,9 +87,14 @@ public class InstructionsActivity extends AppCompatActivity {
            ingredientId-=1;
            if (ingredientId < 0){
                Toast.makeText(this, "There's no previous steps", Toast.LENGTH_SHORT).show();
+               ingredientId+=1;
            }else {
                openTheSameActivity.putExtra(getString(R.string.ingredientIdKey), ingredientId);
                openTheSameActivity.putExtra(getString(R.string.recipeKey), recipeId);
+               // kill the current Activity before navigating to second one for two reason:
+                   // 1- It's no longer need and the user will not expect they need to return to it (will use the navigation arrows)
+                  //  2- free up the memory for smooth user experience.
+               finish();
                startActivity(openTheSameActivity);
            }
        });
@@ -98,9 +103,11 @@ public class InstructionsActivity extends AppCompatActivity {
             ingredientId+=1;
             if (ingredientId >= stepsNumber){
                 Toast.makeText(this, "There's no next steps to view, this is the last step", Toast.LENGTH_SHORT).show();
+                ingredientId-=1;
             }else {
                 openTheSameActivity.putExtra(getString(R.string.ingredientIdKey), ingredientId);
                 openTheSameActivity.putExtra(getString(R.string.recipeKey), recipeId);
+                finish();
                 startActivity(openTheSameActivity);
             }
         });
