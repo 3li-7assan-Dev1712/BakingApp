@@ -15,18 +15,18 @@ import java.util.List;
 public class JsonUtils {
 
 
-    public static List<String> getRecipesName(String jsonResponse) throws JSONException {
-        List<String> recipeEntries = new ArrayList<>();
+    public static List<String> getRecipeNames(String jsonResponse) throws JSONException, Exception {
+        List<String> recipesName = new ArrayList<>();
         JSONArray recipesArray = new JSONArray(jsonResponse);
         for (int i = 0; i < recipesArray.length(); i ++){
             JSONObject recipeObject = recipesArray.getJSONObject(i);
             String recipeName = recipeObject.getString(JsonConstants.RECIPE_NAME);
-            recipeEntries.add(recipeName);
+            recipesName.add(recipeName);
         }
-       if (recipeEntries.size() != 0)
-           return recipeEntries;
-       else
-           throw new JSONException("Couldn't read from json");
+        if (recipesName.size() != 0)
+            return recipesName;
+        else
+            throw new Exception("Couldn't read from json");
     }
 
     public static List<String> getRecipeSteps(String jsonResponse, int recipeId) throws JSONException, Exception {
