@@ -69,4 +69,11 @@ public class JsonUtils {
         else
             throw new Exception("Couldn't read from json");
     }
+    public static String getRecipeVideoUrl(String jsonResponse, int recipeId, int stepId) throws JSONException, Exception {
+        JSONArray recipesArray = new JSONArray(jsonResponse);
+        JSONObject recipeObject = recipesArray.getJSONObject(recipeId);
+        JSONArray stepsArray = recipeObject.getJSONArray(JsonConstants.RECIPE_STEPS);
+        JSONObject stepObj = stepsArray.getJSONObject(stepId);
+        return stepObj.getString(JsonConstants.VIDEO_URL);
+    }
 }
