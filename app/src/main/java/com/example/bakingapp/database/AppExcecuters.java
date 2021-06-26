@@ -9,10 +9,10 @@ public class AppExcecuters {
     private static Executor recipeIO; // recipe Input Output
     private final static Object LOCK = new Object();
     private static  AppExcecuters sInstance;
-    private AppExcecuters(Executor _daskIO){
-        this.recipeIO = _daskIO;
+    private AppExcecuters(Executor _recipeIO){
+        this.recipeIO = _recipeIO;
     }
-    public Executor deskIO(){
+    public Executor recipeIO(){
         return recipeIO;
     }
     public static AppExcecuters getsInstance(){
