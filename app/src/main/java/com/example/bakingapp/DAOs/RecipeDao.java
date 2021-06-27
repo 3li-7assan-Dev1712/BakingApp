@@ -14,6 +14,4 @@ public interface RecipeDao {
     LiveData<List<RecipeEntry>> loadAllRecipes();
     @Insert()
     void addAllRecipe(List<RecipeEntry> entries);
-    @Query("SELECT * FROM RecipeEntry WHERE id = :id")
-    LiveData<RecipeEntry> loadRecipeById(int id);
 }

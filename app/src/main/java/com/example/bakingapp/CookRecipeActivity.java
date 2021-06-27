@@ -1,17 +1,23 @@
 package com.example.bakingapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.bakingapp.Adapters.StepsAdapter;
 import com.example.bakingapp.JsonRef.JsonUtils;
+import com.example.bakingapp.ViewModels.LoadStepsViewModel;
+import com.example.bakingapp.ViewModels.LoadStepsViewModelFactory;
+import com.example.bakingapp.database.BakingDatabase;
 
 import java.util.List;
 
@@ -30,27 +36,38 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
         stepsRecycler.setLayoutManager(new LinearLayoutManager(this));
         stepsRecycler.setHasFixedSize(true);
         Intent intent = getIntent();
-        ;
         if (intent != null && intent.hasExtra(getString(R.string.open_cook_activity_key)))
-            recipeId = intent.getIntExtra(getString(R.string.open_cook_activity_key), 0);
+            recipeId = intent.getIntExtra(getString(R.string.open_cook_activity_key), 0) +1;
         try {
             steps= JsonUtils.getRecipeSteps(jsonRes, recipeId);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        stepsAdapter = new StepsAdapter(this, this, steps);
+        stepsAdapter = new StepsAdapter(this, this);
         stepsRecycler.setAdapter(stepsAdapter);
 
+        BakingDatabase mDb = BakingDatabase.getsInstance(this);
+        LoadStepsViewModelFactory factory = new LoadStepsViewModelFactory(recipeId, mDb);
+        LoadStepsViewModel viewModel = new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                return (T) factory.create(LoadStepsViewModel.class);
+            }
+        }.create(LoadStepsViewModel.class);
+
+        viewModel.getListStepsLiveData().observe(this, entries -> {
+            Toast.makeText(CookRecipeActivity.this, "setAdapter and entries number is: " + entries.size(), Toast.LENGTH_SHORT).show();
+            Log.d("any", "setAdapter woks");
+            stepsAdapter.setStepsList(entries);
+        });
         // See Ingredients Button Implementation
         Button seeIngredientsBtn = findViewById(R.id.seeIngredientsButton);
-        seeIngredientsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent openIngredientsActivity = new Intent(CookRecipeActivity.this, IngredientsActivity.class);
-                openIngredientsActivity.putExtra(getString(R.string.recipeKey), recipeId);
-                openIngredientsActivity.putExtra(getString(R.string.jsonResKey), jsonRes);
-                startActivity(openIngredientsActivity);
-            }
+        seeIngredientsBtn.setOnClickListener(v -> {
+            Intent openIngredientsActivity = new Intent(CookRecipeActivity.this, IngredientsActivity.class);
+            openIngredientsActivity.putExtra(getString(R.string.recipeKey), recipeId);
+            openIngredientsActivity.putExtra(getString(R.string.jsonResKey), jsonRes);
+            startActivity(openIngredientsActivity);
         });
     }
 

@@ -10,10 +10,9 @@ import com.example.bakingapp.Entries.StepsEntry;
 import java.util.List;
 @Dao
 public interface StepsDao {
-    @Query("SELECT * FROM StepsEntry ORDER BY id")
-    LiveData<List<StepsEntry>> loadAllSteps();
+    @Query("SELECT * FROM StepsEntry WHERE recipeId= :recipeId ORDER BY id")
+    LiveData<List<StepsEntry>> loadAllSteps(int recipeId);
     @Insert()
     void addAllSteps(List<StepsEntry> entries);
-    @Query("SELECT * FROM StepsEntry WHERE id = :id")
-    LiveData<StepsEntry> loadStepById(int id);
+
 }
