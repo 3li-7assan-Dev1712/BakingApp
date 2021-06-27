@@ -10,10 +10,8 @@ import com.example.bakingapp.Entries.IngredientEntry;
 import java.util.List;
 @Dao
 public interface IngredientDao {
-    @Query("SELECT * FROM IngredientEntry ORDER BY id")
-    LiveData<List<IngredientEntry>> loadAllIngredients();
+    @Query("SELECT * FROM IngredientEntry WHERE recipe_id= :recipeId ORDER BY id")
+    LiveData<List<IngredientEntry>> loadAllIngredients(int recipeId);
     @Insert()
-    void addIngredient(IngredientEntry entry);
-    @Query("SELECT * FROM IngredientEntry WHERE id = :id")
-    LiveData<IngredientEntry> loadIngredientById(int id);
+    void addAllIngredients(List<IngredientEntry> entries);
 }

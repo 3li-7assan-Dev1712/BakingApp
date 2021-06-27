@@ -12,4 +12,6 @@
     <string name="recipeKey">recipeKey</string>
     <string name="jsonResKey">jsonKey</string>
     <string name="todo">TODO</string>
+    <string name="instruction_key">InstructionKey</string>
+    <string name="no_video_text">Sorry, There\'s no video for this step!</string>
 </resources>

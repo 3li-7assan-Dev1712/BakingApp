@@ -18,20 +18,23 @@ public class StepsEntry {
     @ColumnInfo (name = "thumbnail_url")
     private String thumbnailUrl;
 
-    public StepsEntry(int id, String shortDescription, String description, String videoUrl, String thumbnailUrl) {
+    private int recipeId;
+    public StepsEntry(int id, String shortDescription, String description, String videoUrl, String thumbnailUrl, int recipeId) {
         this.id = id;
         this.shortDescription = shortDescription;
         this.description = description;
         this.videoUrl = videoUrl;
         this.thumbnailUrl = thumbnailUrl;
+        this.recipeId = recipeId;
     }
 
     @Ignore
-    public StepsEntry(String shortDescription, String description, String videoUrl, String thumbnailUrl) {
+    public StepsEntry(String shortDescription, String description, String videoUrl, String thumbnailUrl, int recipeId) {
         this.shortDescription = shortDescription;
         this.description = description;
         this.videoUrl = videoUrl;
         this.thumbnailUrl = thumbnailUrl;
+        this.recipeId = recipeId;
     }
 
     public int getId() {
@@ -52,5 +55,9 @@ public class StepsEntry {
 
     public String getThumbnailUrl() {
         return thumbnailUrl;
+    }
+
+    public int getRecipeId() {
+        return recipeId;
     }
 }

@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.bakingapp.Entries.IngredientEntry;
+import com.example.bakingapp.Entries.RecipeEntry;
 import com.example.bakingapp.JsonRef.JsonConstants;
 
 import java.util.ArrayList;
@@ -22,10 +23,10 @@ public class JsonUtils {
             String recipeName = recipeObject.getString(JsonConstants.RECIPE_NAME);
             recipesName.add(recipeName);
         }
-       if (recipesName.size() != 0)
-           return recipesName;
-       else
-           throw new Exception("Couldn't read from json");
+        if (recipesName.size() != 0)
+            return recipesName;
+        else
+            throw new Exception("Couldn't read from json");
     }
 
     public static List<String> getRecipeSteps(String jsonResponse, int recipeId) throws JSONException, Exception {
@@ -44,7 +45,7 @@ public class JsonUtils {
             throw new Exception("Couldn't read from json");
     }
 
-    public static String getRecipeDescription(String jsonResponse, int recipeId, int stepId) throws JSONException, Exception {
+    public static String getRecipeDescription(String jsonResponse, int recipeId, int stepId) throws JSONException{
         JSONArray recipesArray = new JSONArray(jsonResponse);
         JSONObject recipeObject = recipesArray.getJSONObject(recipeId);
         JSONArray stepsArray = recipeObject.getJSONArray(JsonConstants.RECIPE_STEPS);
@@ -68,5 +69,18 @@ public class JsonUtils {
             return ingredientEntries;
         else
             throw new Exception("Couldn't read from json");
+    }
+    public static String getRecipeVideoUrl(String jsonResponse, int recipeId, int stepId) throws JSONException {
+        JSONArray recipesArray = new JSONArray(jsonResponse);
+        JSONObject recipeObject = recipesArray.getJSONObject(recipeId);
+        JSONArray stepsArray = recipeObject.getJSONArray(JsonConstants.RECIPE_STEPS);
+        JSONObject stepObj = stepsArray.getJSONObject(stepId);
+        return stepObj.getString(JsonConstants.VIDEO_URL);
+    }
+    public static int getMaxStepId(String jsonResponse, int recipeId) throws JSONException {
+        JSONArray recipesArray = new JSONArray(jsonResponse);
+        JSONObject recipeObject = recipesArray.getJSONObject(recipeId);
+        JSONArray stepsArray = recipeObject.getJSONArray(JsonConstants.RECIPE_STEPS);
+        return stepsArray.length();
     }
 }

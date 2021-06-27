@@ -1,6 +1,7 @@
 package com.example.bakingapp.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientViewHolder> {
+    private static final String TAG = IngredientsAdapter.class.getSimpleName();
     private Context mContext;
     private List<IngredientEntry> ingredientsList;
     public IngredientsAdapter(Context mContext, List<IngredientEntry> ingredientsList) {
@@ -55,6 +57,14 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
             ingredient = itemView.findViewById(R.id.ingredientTextView);
             measure = itemView.findViewById(R.id.measureTextView);
             quantity = itemView.findViewById(R.id.quantityTextView);
+        }
+    }
+
+    public void setIngredientsList(List<IngredientEntry> ingredientsList) {
+        if (ingredientsList!= null) {
+            this.ingredientsList = ingredientsList;
+            notifyDataSetChanged();
+            Log.d(TAG, "set data successfully");
         }
     }
 }

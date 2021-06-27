@@ -11,19 +11,15 @@ public class RecipeEntry {
     private int id;
     @ColumnInfo (name = "recipe_name")
     private String recipeName;
-    @ColumnInfo (name = "recipe_id")
-    private int recipeId;
 
-    public RecipeEntry(int id, String recipeName, int recipeId){
+    public RecipeEntry(int id, String recipeName){
         this.id = id;
         this.recipeName = recipeName;
-        this.recipeId = recipeId;
     }
 
     @Ignore
-    public RecipeEntry(String recipeName, int recipeId){
+    public RecipeEntry(String recipeName){
         this.recipeName = recipeName;
-        this.recipeId = recipeId;
     }
     public int getId() {
         return id;
@@ -33,7 +29,4 @@ public class RecipeEntry {
         return recipeName;
     }
 
-    public int getRecipeId() {
-        return recipeId;
-    }
 }
