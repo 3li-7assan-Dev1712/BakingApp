@@ -3,6 +3,8 @@ package com.example.bakingapp;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,44 +21,97 @@ import com.google.android.exoplayer2.ui.PlayerView;
 
 public class InstructionsActivity extends AppCompatActivity {
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private String videoUrl;
+    private int ingredientId;
+    private int recipeId;
+    private String jsonRes;
+    private int stepsNumber;
+    private SimpleExoPlayer mSimpleExoPlayer;
+    private PlayerView mPlayerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instructions);
         TextView instructionText = findViewById(R.id.instructionsTextView);
+        TextView noVideoTextView = findViewById(R.id.noVideoText);
+        ImageView noVideoImage = findViewById(R.id.noVideoImage);
+        jsonRes = MainActivity.getJsonRes();
         Intent intent = getIntent();
         if (intent != null){
-            int ingredientId = intent.getIntExtra(getString(R.string.ingredientIdKey), 0);
-            int recipeId = intent.getIntExtra(getString(R.string.recipeKey), 0);
-            String jsonRes = intent.getStringExtra(getString(R.string.jsonResKey));
+            ingredientId = intent.getIntExtra(getString(R.string.ingredientIdKey), 0);
+            recipeId = intent.getIntExtra(getString(R.string.recipeKey), 0);
             try {
                 String description = JsonUtils.getRecipeDescription(jsonRes, recipeId, ingredientId);
                 instructionText.setText(description);
+                videoUrl = JsonUtils.getRecipeVideoUrl(jsonRes, recipeId, ingredientId);
+                stepsNumber = JsonUtils.getMaxStepId(jsonRes, recipeId);
+                Toast.makeText(this, "steps number is: " + stepsNumber, Toast.LENGTH_SHORT).show();
+                Log.d("stepsNumber","stpes number is " + stepsNumber);
+                Log.d("any", videoUrl);
             } catch (Exception e) {
                 e.printStackTrace();
+                ingredientId = 0;
+                recipeId = 0;
+
             }
 
         }
 
-        // ExoPlayer
-        PlayerView mPlayerView = findViewById(R.id.playerView);
-        String url = "https://d17h27t6h515a5.cloudfront.net/topher/2017/April/58ffda45_9-add-mixed-nutella-to-crust-creampie/9-add-mixed-nutella-to-crust-creampie.mp4";
-        // All these classes are class memeber attribute
-        SimpleExoPlayer mSimpleExoPlayer = new SimpleExoPlayer.Builder(this)
+        // ExoPlayer implementation
+        mPlayerView = findViewById(R.id.playerView);
+        mSimpleExoPlayer= new SimpleExoPlayer.Builder(this)
                 .setTrackSelector(new DefaultTrackSelector(this))
                 .setLoadControl(new DefaultLoadControl()).build();
-        MediaItem mediaItem = MediaItem.fromUri(url);
-        mSimpleExoPlayer.setMediaItem(mediaItem);
-        mSimpleExoPlayer.prepare();
-        mSimpleExoPlayer.setPlayWhenReady(true);
-        mSimpleExoPlayer.play();
+        // check if you have a video for our step or not
+        if (videoUrl.equals("")){
+            mPlayerView.setVisibility(View.INVISIBLE);
+            noVideoImage.setVisibility(View.VISIBLE);
+            noVideoTextView.setVisibility(View.VISIBLE);
+        }
+
+        else {
+            // if there's a video for the step we set the the image and text to gone, so the user can interact with the player
+            noVideoImage.setVisibility(View.GONE);
+            noVideoTextView.setVisibility(View.GONE);
+            MediaItem mediaItem = MediaItem.fromUri(videoUrl);
+            mSimpleExoPlayer.setMediaItem(mediaItem);
+            mSimpleExoPlayer.prepare();
+            mSimpleExoPlayer.setPlayWhenReady(true);
+            mSimpleExoPlayer.play();
+        }
         mPlayerView.setPlayer(mSimpleExoPlayer);
         ImageView backArrow = findViewById(R.id.goToPrevious);
-        backArrow.setOnClickListener(v -> Toast.makeText(InstructionsActivity.this, "Go to previous step", Toast.LENGTH_SHORT).show());
+        Intent openTheSameActivity = new Intent(InstructionsActivity.this, InstructionsActivity.class);
+       backArrow.setOnClickListener(v -> {
+           ingredientId-=1;
+           if (ingredientId < 0){
+               Toast.makeText(this, "There's no previous steps", Toast.LENGTH_SHORT).show();
+               ingredientId+=1;
+           }else {
+               openTheSameActivity.putExtra(getString(R.string.ingredientIdKey), ingredientId);
+               openTheSameActivity.putExtra(getString(R.string.recipeKey), recipeId);
+               // kill the current Activity before navigating to second one for two reason:
+                   // 1- It's no longer need and the user will not expect they need to return to it (will use the navigation arrows)
+                  //  2- free up the memory for smooth user experience.
+               finish();
+               startActivity(openTheSameActivity);
+           }
+       });
         ImageView nextArrow = findViewById(R.id.goToNext);
-        nextArrow.setOnClickListener(v -> Toast.makeText(InstructionsActivity.this, "Go to next step", Toast.LENGTH_SHORT).show());
-    }
+        nextArrow.setOnClickListener(v -> {
+            ingredientId+=1;
+            if (ingredientId >= stepsNumber){
+                Toast.makeText(this, "There's no next steps to view, this is the last step", Toast.LENGTH_SHORT).show();
+                ingredientId-=1;
+            }else {
+                openTheSameActivity.putExtra(getString(R.string.ingredientIdKey), ingredientId);
+                openTheSameActivity.putExtra(getString(R.string.recipeKey), recipeId);
+                finish();
+                startActivity(openTheSameActivity);
+            }
+        });
 
+    }
 
 }
