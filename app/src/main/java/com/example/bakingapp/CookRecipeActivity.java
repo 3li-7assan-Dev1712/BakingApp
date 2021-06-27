@@ -12,20 +12,13 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.bakingapp.Adapters.StepsAdapter;
-import com.example.bakingapp.JsonRef.JsonUtils;
 import com.example.bakingapp.ViewModels.LoadStepsViewModel;
 import com.example.bakingapp.ViewModels.LoadStepsViewModelFactory;
 import com.example.bakingapp.database.BakingDatabase;
 
-import java.util.List;
-
 public class CookRecipeActivity extends AppCompatActivity implements StepsAdapter.ViewStepInterface {
-
-    private static String jsonRes;
     private StepsAdapter stepsAdapter;
-    private List<String> steps;
     private int recipeId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +30,9 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
         stepsRecycler.setHasFixedSize(true);
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(getString(R.string.open_cook_activity_key)))
-            recipeId = intent.getIntExtra(getString(R.string.open_cook_activity_key), 0) +1;
-        try {
-            steps= JsonUtils.getRecipeSteps(jsonRes, recipeId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            recipeId = intent.getIntExtra(getString(R.string.open_cook_activity_key), 0) +1; /*id in the database start from 1*/
         stepsAdapter = new StepsAdapter(this, this);
         stepsRecycler.setAdapter(stepsAdapter);
-
         BakingDatabase mDb = BakingDatabase.getsInstance(this);
         LoadStepsViewModelFactory factory = new LoadStepsViewModelFactory(recipeId, mDb);
         LoadStepsViewModel viewModel = new ViewModelProvider.Factory() {
@@ -66,21 +53,16 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
         seeIngredientsBtn.setOnClickListener(v -> {
             Intent openIngredientsActivity = new Intent(CookRecipeActivity.this, IngredientsActivity.class);
             openIngredientsActivity.putExtra(getString(R.string.recipeKey), recipeId);
-            openIngredientsActivity.putExtra(getString(R.string.jsonResKey), jsonRes);
             startActivity(openIngredientsActivity);
         });
     }
 
-    public static void setJsonRes(String data){
-        jsonRes = data;
-    }
     @Override
     public void onClickStep(int id) {
         Toast.makeText(this, "clicked " + id, Toast.LENGTH_SHORT).show();
         Intent goToInstructions = new Intent(CookRecipeActivity.this, InstructionsActivity.class);
         goToInstructions.putExtra(getString(R.string.ingredientIdKey), id);
         goToInstructions.putExtra(getString(R.string.recipeKey), recipeId);
-        goToInstructions.putExtra(getString(R.string.jsonResKey), jsonRes);
         startActivity(goToInstructions);
     }
 }
