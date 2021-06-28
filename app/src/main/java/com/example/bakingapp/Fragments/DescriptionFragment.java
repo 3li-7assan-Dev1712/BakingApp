@@ -11,14 +11,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.bakingapp.R;
 
-public class StepVideoFragment extends Fragment {
-    public StepVideoFragment() {
+public class DescriptionFragment extends Fragment {
+    public DescriptionFragment() {
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        /*Inflate the steps layout*/
-        return inflater.inflate(R.layout.instruction_land_fragment, container, false);
+        return inflater.inflate(R.layout.description_text_fragment, container, false);
     }
 }
