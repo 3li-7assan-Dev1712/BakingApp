@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relativeLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/playerView" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/noVideoImage"
+        android:src="@drawable/ic_baseline_close_24"
+        android:contentDescription="@string/todo"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/noVideoText"
+        android:contentDescription="@string/todo"
+        android:layout_below="@id/noVideoImage"
+        android:layout_marginTop="5dp"
+        android:text="@string/no_video_text"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
+        android:textSize="16sp"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
+</RelativeLayout>

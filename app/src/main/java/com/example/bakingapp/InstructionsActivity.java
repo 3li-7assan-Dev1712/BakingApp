@@ -31,10 +31,16 @@ public class InstructionsActivity extends AppCompatActivity {
     private TextView noVideoTextView;
     private TextView instructionText;
 
+    private boolean mLandscapeMode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instructions);
+        if (findViewById(R.id.navigationLinearLayout) == null)
+            mLandscapeMode =true;
+        else
+            mLandscapeMode =false;
+
         instructionText = findViewById(R.id.instructionsTextView);
         noVideoTextView = findViewById(R.id.noVideoText);
         noVideoImage = findViewById(R.id.noVideoImage);
@@ -61,42 +67,46 @@ public class InstructionsActivity extends AppCompatActivity {
 
             populateUi(videoUrl, description);
         });
-        ImageView backArrow = findViewById(R.id.goToPrevious);
-        ImageView nextArrow = findViewById(R.id.goToNext);
-        Intent openTheSameActivity = new Intent(InstructionsActivity.this, InstructionsActivity.class);
-        backArrow.setOnClickListener(v -> {
-           ingredientId-=1;
-           if (ingredientId < 0){
-               Toast.makeText(this, "There's no previous steps", Toast.LENGTH_SHORT).show();
-               ingredientId+=1;
-           }else {
-               openTheSameActivity.putExtra(getString(R.string.ingredientIdKey), ingredientId);
-               openTheSameActivity.putExtra(getString(R.string.recipeKey), recipeId);
-               // kill the current Activity before navigating to second one for two reason:
-                   // 1- It's no longer need and the user will not expect they need to return to it (will use the navigation arrows)
-                  //  2- free up the memory for smooth user experience.
-               finish();
-               startActivity(openTheSameActivity);
-           }
-       });
-        nextArrow.setOnClickListener(v -> {
-            if (stepsNumber == 0) return;
-            ingredientId+=1;
-            if (ingredientId >= stepsNumber){
-                Toast.makeText(this, "There's no next steps to view, this is the last step", Toast.LENGTH_SHORT).show();
-                ingredientId-=1;
-            }else {
-                openTheSameActivity.putExtra(getString(R.string.ingredientIdKey), ingredientId);
-                openTheSameActivity.putExtra(getString(R.string.recipeKey), recipeId);
-                finish();
-                startActivity(openTheSameActivity);
-            }
-        });
-
+        /*if the orientation is not landscape we can create our navigation arrows*/
+        if (!mLandscapeMode) {
+            ImageView backArrow = findViewById(R.id.goToPrevious);
+            ImageView nextArrow = findViewById(R.id.goToNext);
+            Intent openTheSameActivity = new Intent(InstructionsActivity.this, InstructionsActivity.class);
+            backArrow.setOnClickListener(v -> {
+                ingredientId -= 1;
+                if (ingredientId < 0) {
+                    Toast.makeText(this, "There's no previous steps", Toast.LENGTH_SHORT).show();
+                    ingredientId += 1;
+                } else {
+                    openTheSameActivity.putExtra(getString(R.string.ingredientIdKey), ingredientId);
+                    openTheSameActivity.putExtra(getString(R.string.recipeKey), recipeId);
+                    // kill the current Activity before navigating to second one for two reason:
+                    // 1- It's no longer need and the user will not expect they need to return to it (will use the navigation arrows)
+                    //  2- free up the memory for smooth user experience.
+                    finish();
+                    startActivity(openTheSameActivity);
+                }
+            });
+            nextArrow.setOnClickListener(v -> {
+                if (stepsNumber == 0) return;
+                ingredientId += 1;
+                if (ingredientId >= stepsNumber) {
+                    Toast.makeText(this, "There's no next steps to view, this is the last step", Toast.LENGTH_SHORT).show();
+                    ingredientId -= 1;
+                } else {
+                    openTheSameActivity.putExtra(getString(R.string.ingredientIdKey), ingredientId);
+                    openTheSameActivity.putExtra(getString(R.string.recipeKey), recipeId);
+                    finish();
+                    startActivity(openTheSameActivity);
+                }
+            });
+        }
     }
 
     private void populateUi(String videoUrl, String description) {
-        instructionText.setText(description);
+        /*in the landscape mode we don't have description, so we do so in the vertical mode*/
+        if (!mLandscapeMode)
+            instructionText.setText(description);
         // ExoPlayer implementation
         PlayerView mPlayerView = findViewById(R.id.playerView);
         mSimpleExoPlayer= new SimpleExoPlayer.Builder(this)
