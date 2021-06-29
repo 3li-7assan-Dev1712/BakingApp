@@ -35,13 +35,7 @@ public class IngredientsActivity extends AppCompatActivity {
         RecyclerView ingredientsRecycler = findViewById(R.id.ingredientsRecycler);
         Intent intent  = getIntent();
         if (intent != null){
-            String jsonRes = intent.getStringExtra(getString(R.string.jsonResKey));
             recipeId = intent.getIntExtra(getString(R.string.recipeKey), 0);
-            try {
-                ingredientEntries = JsonUtils.getRecipeIngredients(jsonRes, recipeId);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
         ingredientsAdapter = new IngredientsAdapter(this, ingredientEntries);
         ingredientsRecycler.setAdapter(ingredientsAdapter);

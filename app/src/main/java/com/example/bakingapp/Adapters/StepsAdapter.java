@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bakingapp.Entries.StepsEntry;
 import com.example.bakingapp.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHolder> {
@@ -70,5 +69,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
             notifyDataSetChanged();
             Log.d("TAG", "added the data successfully");
         }
+    }
+    public StepsEntry getStepById(int id){
+        return stepsEntries.get(id);
     }
 }
