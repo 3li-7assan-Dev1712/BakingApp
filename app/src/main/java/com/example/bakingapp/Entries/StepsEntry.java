@@ -1,13 +1,13 @@
 package com.example.bakingapp.Entries;
-
-
+import android.os.Parcel;
+import android.os.Parcelable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class StepsEntry {
+public class StepsEntry implements Parcelable {
     @PrimaryKey (autoGenerate = true)
     private int id;
     @ColumnInfo (name = "short_description")
@@ -37,6 +37,27 @@ public class StepsEntry {
         this.recipeId = recipeId;
     }
 
+    protected StepsEntry(Parcel in) {
+        id = in.readInt();
+        shortDescription = in.readString();
+        description = in.readString();
+        videoUrl = in.readString();
+        thumbnailUrl = in.readString();
+        recipeId = in.readInt();
+    }
+
+    public static final Creator<StepsEntry> CREATOR = new Creator<StepsEntry>() {
+        @Override
+        public StepsEntry createFromParcel(Parcel in) {
+            return new StepsEntry(in);
+        }
+
+        @Override
+        public StepsEntry[] newArray(int size) {
+            return new StepsEntry[size];
+        }
+    };
+
     public int getId() {
         return id;
     }
@@ -60,4 +81,20 @@ public class StepsEntry {
     public int getRecipeId() {
         return recipeId;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(shortDescription);
+        dest.writeString(description);
+        dest.writeString(videoUrl);
+        dest.writeString(thumbnailUrl);
+        dest.writeInt(recipeId);
+    }
+
 }
