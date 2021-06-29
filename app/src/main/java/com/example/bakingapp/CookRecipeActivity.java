@@ -52,6 +52,7 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
             if (savedInstanceState == null) {
                 RecipeStepsFragment recipeStepsFragment = new RecipeStepsFragment();
                 recipeStepsFragment.setStepsEntries(entries);
+                recipeStepsFragment.setRecipeId(recipeId);
                 getSupportFragmentManager().beginTransaction().add(R.id.recipeStepsFrag, recipeStepsFragment).commit();
                 Log.d("any", "setAdapter woks");
             }

@@ -1,38 +1,34 @@
 package com.example.bakingapp.Fragments;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bakingapp.Adapters.StepsAdapter;
-import com.example.bakingapp.CookRecipeActivity;
 import com.example.bakingapp.Entries.StepsEntry;
+import com.example.bakingapp.IngredientsActivity;
 import com.example.bakingapp.R;
-import com.example.bakingapp.ViewModels.LoadStepsViewModel;
-import com.example.bakingapp.ViewModels.LoadStepsViewModelFactory;
-import com.example.bakingapp.database.BakingDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeStepsFragment extends Fragment {
     private List<StepsEntry> stepsEntries;
+    private int recipeId;
+
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
+    }
 
     public void setStepsEntries(List<StepsEntry> stepsEntries) {
         this.stepsEntries = stepsEntries;
@@ -49,6 +45,7 @@ public class RecipeStepsFragment extends Fragment {
         View view= inflater.inflate(R.layout.recipe_steps_fragment, container, false);
         if (savedInstanceState != null){
             stepsEntries= savedInstanceState.getParcelableArrayList("ali");
+            recipeId = savedInstanceState.getInt(getString(R.string.recipeKey));
         }
         RecyclerView recyclerView = view.findViewById(R.id.stepsRecycler);
         recyclerView.setHasFixedSize(true);
@@ -58,14 +55,21 @@ public class RecipeStepsFragment extends Fragment {
         recyclerView.setAdapter(stepsAdapter);
 
         Button btn = view.findViewById(R.id.seeIngredientsButton);
-        btn.setOnClickListener(v ->
-                Toast.makeText(getContext(), "OK", Toast.LENGTH_SHORT).show());
+        btn.setOnClickListener(v -> {
+            if (getContext() != null) {
+                Intent openIngredientsIntent = new Intent(getContext(), IngredientsActivity.class);
+                openIngredientsIntent.putExtra(getString(R.string.recipeKey), recipeId);
+                getContext().startActivity(openIngredientsIntent);
+            }
+        });
+
         return view;
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putParcelableArrayList("ali", (ArrayList<? extends Parcelable>) stepsEntries);
+        outState.putInt(getString(R.string.recipeKey), recipeId);
         super.onSaveInstanceState(outState);
     }
 }
