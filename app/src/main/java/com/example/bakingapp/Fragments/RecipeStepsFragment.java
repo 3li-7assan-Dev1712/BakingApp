@@ -56,23 +56,6 @@ public class RecipeStepsFragment extends Fragment {
         StepsAdapter stepsAdapter = new StepsAdapter(getContext(), (StepsAdapter.ViewStepInterface) getContext());
         stepsAdapter.setStepsList(stepsEntries);
         recyclerView.setAdapter(stepsAdapter);
-//        BakingDatabase mDb = BakingDatabase.getsInstance(getContext());
-//        LoadStepsViewModelFactory factory = new LoadStepsViewModelFactory(recipeId, mDb);
-//        LoadStepsViewModel viewModel = new ViewModelProvider.Factory() {
-//            @NonNull
-//            @Override
-//            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-//                return (T) factory.create(LoadStepsViewModel.class);
-//            }
-//        }.create(LoadStepsViewModel.class);
-//        viewModel.getListStepsLiveData().observe((LifecycleOwner) getContext(), stepsEntries -> {
-//            RecyclerView recyclerView = view.findViewById(R.id.stepsRecycler);
-//            recyclerView.setHasFixedSize(true);
-//            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//            StepsAdapter stepsAdapter = new StepsAdapter(getContext(), (StepsAdapter.ViewStepInterface) getContext());
-//            stepsAdapter.setStepsList(stepsEntries);
-//            recyclerView.setAdapter(stepsAdapter);
-//        });
 
         Button btn = view.findViewById(R.id.seeIngredientsButton);
         btn.setOnClickListener(v ->

@@ -66,7 +66,7 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
                 StepVideoFragment stepVideoFragment= new StepVideoFragment();
                 String videoUrl = entries.get(0).getVideoUrl();
                 stepVideoFragment.setVideoUrl(videoUrl);
-                manager.beginTransaction().add(R.id.video_step_fragment, stepVideoFragment).commit();
+                manager.beginTransaction().add(R.id.frameLayout, stepVideoFragment).commit();
             }
         });
     }

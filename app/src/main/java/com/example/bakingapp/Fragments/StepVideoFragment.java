@@ -35,6 +35,9 @@ public class StepVideoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         /*Inflate the steps layout*/
         View view = inflater.inflate(R.layout.instruction_land_fragment, container, false);
+        if (savedInstanceState != null){
+            videoUrl = savedInstanceState.getString("ali");
+        }
         mPlayerView = view.findViewById(R.id.playerView);
         mSimpleExoPLayer= new SimpleExoPlayer.Builder(getContext())
                 .setTrackSelector(new DefaultTrackSelector(getContext()))
@@ -54,6 +57,12 @@ public class StepVideoFragment extends Fragment {
         }
         mPlayerView.setPlayer(mSimpleExoPLayer);
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString("ali", videoUrl);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

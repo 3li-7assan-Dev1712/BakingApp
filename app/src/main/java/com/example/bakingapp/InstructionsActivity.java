@@ -38,7 +38,7 @@ public class InstructionsActivity extends AppCompatActivity {
         }
         String videoUrl = stepsEntries.get(ingredientId).getVideoUrl();
         String description = stepsEntries.get(ingredientId).getDescription();
-        populateUi(videoUrl, description);
+        populateUi(videoUrl, description, savedInstanceState);
         /*if the orientation is not landscape we can create our navigation arrows*/
         if (!mLandscapeMode) {
             ImageView backArrow = findViewById(R.id.goToPrevious);
@@ -75,7 +75,7 @@ public class InstructionsActivity extends AppCompatActivity {
         }
     }
 
-    private void populateUi(String videoUrl, String description) {
+    private void populateUi(String videoUrl, String description, Bundle saveInstanceState) {
         FragmentManager manager = getSupportFragmentManager();
         /*in the landscape mode we don't have description, so we do so in the vertical mode*/
         if (!mLandscapeMode) {
@@ -85,9 +85,11 @@ public class InstructionsActivity extends AppCompatActivity {
         }
         // ExoPlayer implementation
 
-        StepVideoFragment stepVideoFragment = new StepVideoFragment();
-        stepVideoFragment.setVideoUrl(videoUrl);
-        manager.beginTransaction().add(R.id.frameLayout, stepVideoFragment).commit();
+        if (saveInstanceState == null) {
+            StepVideoFragment stepVideoFragment = new StepVideoFragment();
+            stepVideoFragment.setVideoUrl(videoUrl);
+            manager.beginTransaction().add(R.id.frameLayout, stepVideoFragment).commit();
+        }
     }
 
 //    @Override
