@@ -33,6 +33,7 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cook_recipe);
         mTowPane = findViewById(R.id.separaterView) != null;
+        Log.d("ali", "mTwoPane is " + mTowPane);
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(getString(R.string.open_cook_activity_key)))
             recipeId = intent.getIntExtra(getString(R.string.open_cook_activity_key), 0) +1; /*id in the database start from 1*/
@@ -75,7 +76,14 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
     public void onClickStep(int id) {
         if (mTowPane){
             /*will be implemented in the next commit*/
-
+            FragmentManager manager = getSupportFragmentManager();
+            StepVideoFragment stepVideoFragment = new StepVideoFragment();
+            stepVideoFragment.setVideoUrl(stepsEntries.get(id).getVideoUrl());
+            manager.beginTransaction().replace(R.id.frameLayout, stepVideoFragment).commit();
+            /*Now the video description*/
+            DescriptionFragment descriptionFragment = new DescriptionFragment();
+            descriptionFragment.setDescription(stepsEntries.get(id).getDescription());
+            manager.beginTransaction().replace(R.id.descriptionFragment, descriptionFragment).commit();
         }else {
             Toast.makeText(this, "clicked " + id, Toast.LENGTH_SHORT).show();
             Intent goToInstructions = new Intent(CookRecipeActivity.this, InstructionsActivity.class);

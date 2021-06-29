@@ -26,7 +26,6 @@
         <androidx.fragment.app.FragmentContainerView
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:name="com.example.bakingapp.Fragments.StepVideoFragment"
             android:id="@+id/frameLayout"/>
 
         <androidx.fragment.app.FragmentContainerView
@@ -34,6 +33,6 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="5dp"
             android:id="@+id/descriptionFragment"
-            android:name="com.example.bakingapp.Fragments.DescriptionFragment"/>
+            />
     </LinearLayout>
 </LinearLayout>
