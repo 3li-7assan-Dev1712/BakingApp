@@ -26,6 +26,8 @@ import com.example.bakingapp.Entries.RecipeEntry;
 import com.example.bakingapp.Entries.StepsEntry;
 import com.example.bakingapp.InternetUtils.NetworkUtils;
 import com.example.bakingapp.JsonRef.JsonDbUtils;
+import com.example.bakingapp.ViewModels.LoadStepsViewModel;
+import com.example.bakingapp.ViewModels.LoadStepsViewModelFactory;
 import com.example.bakingapp.ViewModels.RecipesViewModel;
 import com.example.bakingapp.database.AppExcecuters;
 import com.example.bakingapp.database.BakingDatabase;
@@ -74,6 +76,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         recipeAdapter.notifyDataSetChanged();
+        /*here we also update the widget to display the current steps */
+        BakingDatabase mDb = BakingDatabase.getsInstance(this);
+        /*I added 1 for each item changed in the sharedPreference because it stored +1 in the database.*/
+        LoadStepsViewModelFactory factory = new LoadStepsViewModelFactory(sharedPreferences.getInt(key, -1)+1, mDb);
+        LoadStepsViewModel viewModel = new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                return (T) factory.create(LoadStepsViewModel.class);
+            }
+        }.create(LoadStepsViewModel.class);
+        viewModel.getListStepsLiveData().observe(this, stepsEntries -> {
+            AppRecipeService.startActionSetFirstStep(MainActivity.this, stepsEntries);
+        });
         Toast.makeText(this, "Change happened, The current favorite is " + sharedPreferences.getInt(key, SharedPreferenceUtils.defaultValue), Toast.LENGTH_SHORT).show();
 
     }

@@ -10,23 +10,11 @@ import android.widget.RemoteViews;
  */
 public class RecipeWidgetProvider extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
-
-        CharSequence widgetText = context.getString(R.string.appwidget_text);
-        // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget_provider);
-        views.setTextViewText(R.id.appwidget_description_text, widgetText);
-
-        // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
-    }
-
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
-        for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
+        for (int ignored : appWidgetIds) {
+            AppRecipeService.startActionSetFirstStep(context, null);
         }
     }
 
@@ -38,6 +26,20 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
+    }
+    public static void updateAppRecipeWidgets(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds, String stepDes) {
+        // There may be multiple widgets active, so update all of them
+        for (int appWidgetId : appWidgetIds) {
+            updateAppRecipeWidget(context, appWidgetManager, appWidgetId, stepDes);
+        }
+    }
+    public static void updateAppRecipeWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, String stepDes) {
+
+        // Construct the RemoteViews object
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget_provider);
+        views.setTextViewText(R.id.appwidget_description_text, stepDes);
+        // Instruct the widget manager to update the widget
+        appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 }
 
