@@ -1,9 +1,11 @@
 package com.example.bakingapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -32,7 +34,8 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>, RecipeAdapter.ChooseRecipeInterface{
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>,
+        RecipeAdapter.ChooseRecipeInterface, RecipeAdapter.SelectPreferedRecipe, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private final int RECIPE_LOADER_ID = 10;
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
          */
         recipesNameRecycler.setHasFixedSize(true);
         recipesNameRecycler.setLayoutManager(new LinearLayoutManager(this));
-        recipeAdapter = new RecipeAdapter(this, this);
+        recipeAdapter = new RecipeAdapter(this, this, this);
         recipesNameRecycler.setAdapter(recipeAdapter);
 
         /*
@@ -64,8 +67,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Toast.makeText(this, "Going to fill database", Toast.LENGTH_SHORT).show();
         fillDatabaseIfEmpty();
 
+        /*register the listener*/
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.baking_app_shared_key), MODE_PRIVATE);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        recipeAdapter.notifyDataSetChanged();
+        Toast.makeText(this, "Change happened, The current favorite is " + sharedPreferences.getInt(key, SharedPreferenceUtils.defaultValue), Toast.LENGTH_SHORT).show();
 
+    }
     private void fillDatabaseIfEmpty() {
         // add them to the build.gradle file
 
@@ -88,6 +99,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 Toast.makeText(MainActivity.this, "entries has: " + entries.size() , Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        /*unregister the listener*/
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.baking_app_shared_key), MODE_PRIVATE);
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @NonNull
@@ -706,5 +725,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Intent openCookRecipeActivity = new Intent(MainActivity.this, CookRecipeActivity.class);
         openCookRecipeActivity.putExtra(getString(R.string.open_cook_activity_key), id);
         startActivity(openCookRecipeActivity);
+    }
+
+    @Override
+    public void onSelectPreferedRecipe(int id, View view) {
+        ImageView emptyStar = view.findViewById(R.id.emptyStar);
+        ImageView fullStar = view.findViewById(R.id.fullStar);
+        emptyStar.setVisibility(View.VISIBLE);
+        emptyStar.setOnClickListener( _v -> {
+            fullStar.setVisibility(View.VISIBLE);
+            emptyStar.setVisibility(View.GONE);
+            Toast.makeText(this, "Added to the prefered recipes.", Toast.LENGTH_SHORT).show();
+            SharedPreferenceUtils.updateFavoriteRecipe(this, id);
+        });
+        fullStar.setOnClickListener( _v -> {
+            emptyStar.setVisibility(View.VISIBLE);
+            fullStar.setVisibility(View.GONE);
+            Toast.makeText(this, "removed it from the prefered recipes.", Toast.LENGTH_SHORT).show();
+            SharedPreferenceUtils.setDefaultValue(this);
+        });
     }
 }

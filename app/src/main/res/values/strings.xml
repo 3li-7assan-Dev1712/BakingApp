@@ -11,7 +11,11 @@
     <string name="ingredientIdKey">ingredientKey</string>
     <string name="recipeKey">recipeKey</string>
     <string name="jsonResKey">jsonKey</string>
-    <string name="todo">TODO</string>
     <string name="instruction_key">InstructionKey</string>
     <string name="no_video_text">Sorry, There\'s no video for this step!</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="see_next_des_widget">Press to see the next description in the widget</string>
+    <string name="todo">TODO</string>
+    <string name="baking_app_shared_key">bakingAppSharePreference</string>
 </resources>
