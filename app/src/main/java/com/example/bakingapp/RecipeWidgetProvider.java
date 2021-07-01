@@ -87,6 +87,16 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
                 PendingIntent.getService(context, 0, goToPreviousStep, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.next_description_image_widget, goToNextStepPendingIndent);
         views.setOnClickPendingIntent(R.id.previous_description_image_widget, goToPreviousStepPendingIntent);
+        /*open the detail activity when the user click the text description text*/
+
+        if (mStepsEntries != null){
+            Intent openInstructionActivity = new Intent(context, InstructionsActivity.class);
+            openInstructionActivity.putParcelableArrayListExtra("ali", (ArrayList<? extends Parcelable>) mStepsEntries);
+            openInstructionActivity.putExtra(context.getString(R.string.ingredientIdKey), SharedPreferenceUtils.getMaxNumberOfSteps(context));
+            PendingIntent openInstructionPendingIntent=
+                    PendingIntent.getActivity(context, 0, openInstructionActivity, PendingIntent.FLAG_UPDATE_CURRENT);
+            views.setOnClickPendingIntent(R.id.appwidget_description_text, openInstructionPendingIntent);
+        }
         // Instruct the widget manager to update the widget
         return views;
     }
@@ -112,13 +122,24 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
                 PendingIntent.getService(context, 0, goToPreviousStep, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.next_description_image_widget, goToNextStepPendingIndent);
         views.setOnClickPendingIntent(R.id.previous_description_image_widget, goToPreviousStepPendingIntent);
+        if (mStepsEntries != null){
+            Intent openInstructionActivity = new Intent(context, InstructionsActivity.class);
+            openInstructionActivity.putParcelableArrayListExtra("ali", (ArrayList<? extends Parcelable>) mStepsEntries);
+            openInstructionActivity.putExtra(context.getString(R.string.ingredientIdKey), SharedPreferenceUtils.getMaxNumberOfSteps(context));
+            PendingIntent openInstructionPendingIntent=
+                    PendingIntent.getActivity(context, 0, openInstructionActivity, PendingIntent.FLAG_UPDATE_CURRENT);
+            views.setOnClickPendingIntent(R.id.appwidget_description_text, openInstructionPendingIntent);
+        }
         // Instruct the widget manager to update the widget
         return views;
     }
 
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
-        AppRecipeService.startActionSetFirstStep(context, mStepsEntries);
+        if (mStepsEntries !=  null) {
+            String description = mStepsEntries.get(SharedPreferenceUtils.getMaxNumberOfSteps(context)).getDescription();
+            updateAppRecipeWidget(context, appWidgetManager, appWidgetId, description);
+        }
         Log.d(TAG, "onChange is called");
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
     }
