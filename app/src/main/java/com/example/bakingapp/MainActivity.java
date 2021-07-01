@@ -75,11 +75,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        /*When a change happen we should notify the adapter to update the UI (putting the start on the selected recipe*/
         recipeAdapter.notifyDataSetChanged();
-        /*here we also update the widget to display the current steps */
         BakingDatabase mDb = BakingDatabase.getsInstance(this);
-        /*I added 1 for each item changed in the sharedPreference because it stored +1 in the database.*/
-        LoadStepsViewModelFactory factory = new LoadStepsViewModelFactory(sharedPreferences.getInt(key, -1)+1, mDb);
+        /*each Id in the database start from 1, so we add 1 to indicate to the proper recipe in the DB.*/
+        int recipeId = sharedPreferences.getInt(key, SharedPreferenceUtils.defaultValue)+1;
+        LoadStepsViewModelFactory factory =
+                new LoadStepsViewModelFactory(recipeId, mDb);
         LoadStepsViewModel viewModel = new ViewModelProvider.Factory() {
             @NonNull
             @Override
@@ -89,8 +91,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }.create(LoadStepsViewModel.class);
         viewModel.getListStepsLiveData().observe(this, stepsEntries -> {
             AppRecipeService.startActionSetFirstStep(MainActivity.this, stepsEntries);
+            RecipeWidgetProvider.setmStepsEntries(stepsEntries);
+            /*after the user change their favorite recipe we reset the recipe step tracker */
+            SharedPreferenceUtils.resetMaxNumberOfSteps(MainActivity.this);
         });
-        Toast.makeText(this, "Change happened, The current favorite is " + sharedPreferences.getInt(key, SharedPreferenceUtils.defaultValue), Toast.LENGTH_SHORT).show();
 
     }
     private void fillDatabaseIfEmpty() {
