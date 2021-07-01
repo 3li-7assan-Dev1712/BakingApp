@@ -59,13 +59,21 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
         /*create the intent to start out service to update the widget in the background*/
         Intent goToNextStepIntent = new Intent(context, AppRecipeService.class);
         goToNextStepIntent.setAction(AppRecipeService.ACTION_GO_TO_NEXT_STEP);
-        if (mStepsEntries != null)
+        /*creating the back navigation arrow for navigating back to see previous steps*/
+        Intent goToPreviousStep = new Intent(context, AppRecipeService.class);
+        goToPreviousStep.setAction(AppRecipeService.ACTION_GO_TO_PREVIOUS_STEP);
+        if (mStepsEntries != null) {
             goToNextStepIntent.putParcelableArrayListExtra(context.getString(R.string.goToNextStepIntentKey), (ArrayList<? extends Parcelable>) mStepsEntries);
+            goToPreviousStep.putParcelableArrayListExtra(context.getString(R.string.goToPrevioustepIntentKey), (ArrayList<? extends Parcelable>) mStepsEntries);
+        }
         else
             Log.e(TAG, "mStepsEntries == null");
-        PendingIntent pendingIntent =
+        PendingIntent goToNextStepPendingIndent =
                 PendingIntent.getService(context, 0, goToNextStepIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setOnClickPendingIntent(R.id.next_description_image_widget, pendingIntent);
+        PendingIntent goToPreviousStepPendingIntent =
+                PendingIntent.getService(context, 0, goToPreviousStep, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.next_description_image_widget, goToNextStepPendingIndent);
+        views.setOnClickPendingIntent(R.id.previous_description_image_widget, goToPreviousStepPendingIntent);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }

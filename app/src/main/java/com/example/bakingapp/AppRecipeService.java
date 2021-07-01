@@ -54,14 +54,36 @@ public class AppRecipeService extends IntentService {
     }
 
     private void handleActionGoToPreviousStep(List<StepsEntry> entries) {
-        /*will be implemented in the next commit if Allah wills.*/
+        // firstly I'll decrease the tracker number
+
+        int lastStepIndex = SharedPreferenceUtils.getMaxNumberOfSteps(this);
+        /*then I check it and if it is bigger or equals to 0 we do out navigation*/
+        if (entries == null)
+            startActionSetFirstStep(this, null);
+        else if (lastStepIndex > 0){
+            SharedPreferenceUtils.decreaseMaxNumberOfStepsByOne(this);
+            lastStepIndex = SharedPreferenceUtils.getMaxNumberOfSteps(this);
+            String recipeDescription = entries.get(lastStepIndex).getDescription();
+            AppWidgetManager manager = AppWidgetManager.getInstance(this);
+            int[] widgetIds = manager.getAppWidgetIds(new ComponentName(this, RecipeWidgetProvider.class));
+            RecipeWidgetProvider.updateAppRecipeWidgets(this,
+                    manager,
+                    widgetIds,
+                    recipeDescription);
+        }else{
+            Toast.makeText(getApplicationContext(), "This is the first step, you can't navigate more back.", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "This is the first step");
+        }
     }
 
     private void handleActionGoToNextStep(List<StepsEntry> entries) {
         /*increase the tracker number and check if it is the last step or not*/
-        SharedPreferenceUtils.increaseMaxNumberOfStepsByOne(this);
         int lastStepIndex = SharedPreferenceUtils.getMaxNumberOfSteps(this);
-        if (lastStepIndex < entries.size()){
+        if (entries==null)
+            startActionSetFirstStep(this, null);
+        else if (lastStepIndex < entries.size()-1){
+            SharedPreferenceUtils.increaseMaxNumberOfStepsByOne(this);
+            lastStepIndex= SharedPreferenceUtils.getMaxNumberOfSteps(this);
             String recipeDescription = entries.get(lastStepIndex).getDescription();
             AppWidgetManager manager = AppWidgetManager.getInstance(this);
             int[] widgetIds = manager.getAppWidgetIds(new ComponentName(this, RecipeWidgetProvider.class));

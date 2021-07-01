@@ -18,7 +18,7 @@
     <string name="see_next_des_widget">Press to see the next description in the widget</string>
     <string name="todo">TODO</string>
     <string name="baking_app_shared_key">bakingAppSharePreference</string>
-    <string name="defaultValueMessage">Sorry, in order to see steps in the widget please choose you favorite widget first.</string>
+    <string name="defaultValueMessage">Sorry, in order to see steps in the widget please choose or update you favorite widget first.</string>
     <string name="goToNextStepIntentKey">goToNextStep</string>
     <string name="goToPrevioustepIntentKey">goToPreviousStep</string>
     <string name="sharedPreference">sharedKey</string>
