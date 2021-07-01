@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -31,7 +32,7 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
         for (int ignored : appWidgetIds) {
-            AppRecipeService.startActionSetFirstStep(context, null);
+            AppRecipeService.startActionSetFirstStep(context, mStepsEntries);
         }
     }
 
@@ -54,6 +55,18 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
 
 
         // Construct the RemoteViews object
+        RemoteViews views;
+        Bundle bundle = appWidgetManager.getAppWidgetOptions(appWidgetId);
+        int minHeight = bundle.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
+        if (minHeight < 80)
+            views = getNormalRemoteViews(context, stepDes);
+        else
+            views = getLongRemoteViews(context, stepDes);
+        // Instruct the widget manager to update the widget
+        appWidgetManager.updateAppWidget(appWidgetId, views);
+    }
+
+    public static RemoteViews getNormalRemoteViews(Context context, String stepDes){
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget_provider);
         views.setTextViewText(R.id.appwidget_description_text, stepDes);
         /*create the intent to start out service to update the widget in the background*/
@@ -75,8 +88,39 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.next_description_image_widget, goToNextStepPendingIndent);
         views.setOnClickPendingIntent(R.id.previous_description_image_widget, goToPreviousStepPendingIntent);
         // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+        return views;
     }
 
+    public static RemoteViews getLongRemoteViews(Context context, String stepDes){
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget_provider_aternative);
+        views.setTextViewText(R.id.appwidget_description_text, stepDes);
+        /*create the intent to start out service to update the widget in the background*/
+        Intent goToNextStepIntent = new Intent(context, AppRecipeService.class);
+        goToNextStepIntent.setAction(AppRecipeService.ACTION_GO_TO_NEXT_STEP);
+        /*creating the back navigation arrow for navigating back to see previous steps*/
+        Intent goToPreviousStep = new Intent(context, AppRecipeService.class);
+        goToPreviousStep.setAction(AppRecipeService.ACTION_GO_TO_PREVIOUS_STEP);
+        if (mStepsEntries != null) {
+            goToNextStepIntent.putParcelableArrayListExtra(context.getString(R.string.goToNextStepIntentKey), (ArrayList<? extends Parcelable>) mStepsEntries);
+            goToPreviousStep.putParcelableArrayListExtra(context.getString(R.string.goToPrevioustepIntentKey), (ArrayList<? extends Parcelable>) mStepsEntries);
+        }
+        else
+            Log.e(TAG, "mStepsEntries == null");
+        PendingIntent goToNextStepPendingIndent =
+                PendingIntent.getService(context, 0, goToNextStepIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent goToPreviousStepPendingIntent =
+                PendingIntent.getService(context, 0, goToPreviousStep, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.next_description_image_widget, goToNextStepPendingIndent);
+        views.setOnClickPendingIntent(R.id.previous_description_image_widget, goToPreviousStepPendingIntent);
+        // Instruct the widget manager to update the widget
+        return views;
+    }
+
+    @Override
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
+        AppRecipeService.startActionSetFirstStep(context, mStepsEntries);
+        Log.d(TAG, "onChange is called");
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+    }
 }
 
