@@ -5,28 +5,38 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="wrap_content"
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp"
-    android:elevation="4dp"
-    >
-
-    <!-- In the MainActivity I'm just going to put the recipes name so the user can choose their favorite one    -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="@android:color/black"
-        android:id="@+id/recipeNameTextView"
-        android:layout_gravity="center_vertical"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-
-        />
+    android:elevation="4dp" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:contentDescription="@string/todo"
+            android:id="@+id/recipe_image"
+            android:layout_gravity="center_horizontal" />
+        <!-- In the MainActivity I'm just going to put the recipes name so the user can choose their favorite one    -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:id="@+id/recipeNameTextView"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            tools:text= "Notilla Pie"/>
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

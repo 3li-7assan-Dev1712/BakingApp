@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -59,6 +60,20 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             Log.d(TAG, "binding in onBind");
             String recipeName = entries.get(position).getRecipeName();
             holder.recipeName.setText(recipeName);
+            switch (position){
+                case 0:
+                    holder.recipeImage.setImageResource(R.drawable.nutella_pie);
+                    break;
+                case 1:
+                    holder.recipeImage.setImageResource(R.drawable.brownie);
+                    break;
+                case 2:
+                    holder.recipeImage.setImageResource(R.drawable.yellow_cake);
+                    break;
+                case 3:
+                    holder.recipeImage.setImageResource(R.drawable.cheese_cake);
+                    break;
+            }
         }
         Log.d(TAG, "data == null, cannot bind");
     }
@@ -75,9 +90,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     static class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView recipeName;
+        ImageView recipeImage;
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             recipeName = itemView.findViewById(R.id.recipeNameTextView);
+            recipeImage= itemView.findViewById(R.id.recipe_image);
             itemView.setOnClickListener(this);
         }
 

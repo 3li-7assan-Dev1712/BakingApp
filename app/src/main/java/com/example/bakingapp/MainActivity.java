@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.AsyncTaskLoader;
 import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         so for performance I going to setHasFixedSize() method to true.
          */
         recipesNameRecycler.setHasFixedSize(true);
-        recipesNameRecycler.setLayoutManager(new LinearLayoutManager(this));
+        recipesNameRecycler.setLayoutManager(new GridLayoutManager(this, 2));
         recipeAdapter = new RecipeAdapter(this, this);
         recipesNameRecycler.setAdapter(recipeAdapter);
 
