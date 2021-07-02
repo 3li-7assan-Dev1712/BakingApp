@@ -117,6 +117,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 recipeAdapter.setRecipesName(entries);
                 Log.d("MainActivity", "entires has values");
                 Toast.makeText(MainActivity.this, "entries has: " + entries.size() , Toast.LENGTH_SHORT).show();
+                /*update the widget information when the the user open the application*/
+                BakingDatabase mDb = BakingDatabase.getsInstance(this);
+                /*each Id in the database start from 1, so we add 1 to indicate to the proper recipe in the DB.*/
+                int recipeId = SharedPreferenceUtils.getFavoriteRecipe(this);
+                LoadStepsViewModelFactory factory =
+                        new LoadStepsViewModelFactory(recipeId, mDb);
+                LoadStepsViewModel viewModel = new ViewModelProvider.Factory() {
+                    @NonNull
+                    @Override
+                    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                        return (T) factory.create(LoadStepsViewModel.class);
+                    }
+                }.create(LoadStepsViewModel.class);
+                viewModel.getListStepsLiveData().observe(this, RecipeWidgetProvider::setmStepsEntries);
             }
         });
     }

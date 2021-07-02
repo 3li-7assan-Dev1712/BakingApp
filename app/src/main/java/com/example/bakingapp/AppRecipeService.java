@@ -103,10 +103,15 @@ public class AppRecipeService extends IntentService {
     private void handleActionSetFirstStep(List<StepsEntry> stepsEntries) {
         /*I use the SharedPreference in order to track the user's preference of the offered recipes.*/
         int recipeId = SharedPreferenceUtils.getFavoriteRecipe(this);
+        int lastStepIndex = SharedPreferenceUtils.getMaxNumberOfSteps(this);
         String firstStep;
         if (recipeId == -1 || stepsEntries == null){
             firstStep = getString(R.string.defaultValueMessage);
-        }else {
+        }else if (recipeId >= 0 && lastStepIndex > 0){
+            /*if the user had a favorite recipe and also stopped in a particular step we're going to
+            * let them keep from where they stopped.*/
+            firstStep = stepsEntries.get(lastStepIndex).getDescription();
+        }else{
             /*getting the first time in the list and set it as the first step of the recipe*/
             firstStep = stepsEntries.get(0).getDescription();
         }
