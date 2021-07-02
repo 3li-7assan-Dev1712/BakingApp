@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".InstructionsActivity"></activity>
+        <activity android:name=".InstructionsActivity"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".IngredientsActivity"
             android:label="@string/ingredient_activity_label" />

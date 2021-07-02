@@ -3,6 +3,7 @@ package com.example.bakingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -16,8 +17,9 @@ import com.example.bakingapp.Fragments.StepVideoFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InstructionsActivity extends AppCompatActivity {
+public class InstructionsActivity extends AppCompatActivity{
 
+    private static final String TAG = InstructionsActivity.class.getSimpleName();
     private int ingredientId;
     private int stepsNumber;
     private List<StepsEntry> stepsEntries;
@@ -26,14 +28,12 @@ public class InstructionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instructions);
-        if (findViewById(R.id.navigationLinearLayout) == null)
-            mLandscapeMode =true;
-        else
-            mLandscapeMode =false;
+        mLandscapeMode = findViewById(R.id.navigationLinearLayout) == null;
         Intent intent = getIntent();
         if (intent != null){
             ingredientId = intent.getIntExtra(getString(R.string.ingredientIdKey), 0);
             this.stepsEntries = intent.getParcelableArrayListExtra("ali");
+            assert stepsEntries != null;
             stepsNumber = stepsEntries.size();
         }
         String videoUrl = stepsEntries.get(ingredientId).getVideoUrl();
@@ -73,6 +73,7 @@ public class InstructionsActivity extends AppCompatActivity {
                 }
             });
         }
+        Log.d(TAG, "onCreate");
     }
 
     private void populateUi(String videoUrl, String description, Bundle saveInstanceState) {
@@ -91,17 +92,4 @@ public class InstructionsActivity extends AppCompatActivity {
             manager.beginTransaction().add(R.id.frameLayout, stepVideoFragment).commit();
         }
     }
-
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        if (Util.SDK_INT < 23)
-//            mSimpleExoPlayer.release();
-//    }
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        if (Util.SDK_INT > 23)
-//            mSimpleExoPlayer.release();
-//    }
 }
