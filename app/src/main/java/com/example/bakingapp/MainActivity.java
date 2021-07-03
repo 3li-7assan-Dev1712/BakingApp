@@ -135,15 +135,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        /*unregister the listener*/
-        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.baking_app_shared_key), MODE_PRIVATE);
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
-    }
-
     @NonNull
     @Override
     public Loader<String> onCreateLoader(int id, @Nullable Bundle args) {

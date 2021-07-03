@@ -58,7 +58,7 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
         RemoteViews views;
         Bundle bundle = appWidgetManager.getAppWidgetOptions(appWidgetId);
         int minHeight = bundle.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
-        if (minHeight < 80)
+        if (minHeight < 156)
             views = getNormalRemoteViews(context, stepDes);
         else
             views = getLongRemoteViews(context, stepDes);
@@ -93,34 +93,31 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
         /*creating the back navigation arrow for navigating back to see previous steps*/
         Intent goToPreviousStep = new Intent(context, AppRecipeService.class);
         goToPreviousStep.setAction(AppRecipeService.ACTION_GO_TO_PREVIOUS_STEP);
-        if (mStepsEntries != null) {
-            goToNextStepIntent.putParcelableArrayListExtra(context.getString(R.string.goToNextStepIntentKey), (ArrayList<? extends Parcelable>) mStepsEntries);
-            goToPreviousStep.putParcelableArrayListExtra(context.getString(R.string.goToPrevioustepIntentKey), (ArrayList<? extends Parcelable>) mStepsEntries);
-        }
-        else
-            Log.e(TAG, "mStepsEntries == null");
+
+        Intent openInstructionActivity = new Intent(context, InstructionsActivity.class);
+
+        goToNextStepIntent.putParcelableArrayListExtra(context.getString(R.string.goToNextStepIntentKey), (ArrayList<? extends Parcelable>) mStepsEntries);
+        goToPreviousStep.putParcelableArrayListExtra(context.getString(R.string.goToPrevioustepIntentKey), (ArrayList<? extends Parcelable>) mStepsEntries);
+        openInstructionActivity.putParcelableArrayListExtra("ali", (ArrayList<? extends Parcelable>) mStepsEntries);
+        openInstructionActivity.putExtra(context.getString(R.string.ingredientIdKey), SharedPreferenceUtils.getMaxNumberOfSteps(context));
         PendingIntent goToNextStepPendingIndent =
                 PendingIntent.getService(context, 0, goToNextStepIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent goToPreviousStepPendingIntent =
                 PendingIntent.getService(context, 0, goToPreviousStep, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.next_description_image_widget, goToNextStepPendingIndent);
-        views.setOnClickPendingIntent(R.id.previous_description_image_widget, goToPreviousStepPendingIntent);
         /*open the detail activity when the user click the text description text*/
-
-        if (mStepsEntries != null){
-            Intent openInstructionActivity = new Intent(context, InstructionsActivity.class);
-            openInstructionActivity.putParcelableArrayListExtra("ali", (ArrayList<? extends Parcelable>) mStepsEntries);
-            openInstructionActivity.putExtra(context.getString(R.string.ingredientIdKey), SharedPreferenceUtils.getMaxNumberOfSteps(context));
-            PendingIntent openInstructionPendingIntent=
-                    PendingIntent.getActivity(context, 0, openInstructionActivity, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent openInstructionPendingIntent=
+                PendingIntent.getActivity(context, 0, openInstructionActivity, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.previous_description_image_widget, goToPreviousStepPendingIntent);
+        if (mStepsEntries!= null && SharedPreferenceUtils.getFavoriteRecipe(context) != -1)
             views.setOnClickPendingIntent(R.id.appwidget_description_text, openInstructionPendingIntent);
-        }
         // Instruct the widget manager to update the widget
         return views;
     }
 
     public static RemoteViews getLongRemoteViews(Context context, String stepDes){
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget_provider_aternative);
+        views.setTextViewText(R.id.appwidget_description_text, stepDes);
         views.setTextViewText(R.id.appwidget_description_text, stepDes);
         int widgetSrc = SharedPreferenceUtils.getFavoriteRecipe(context);
         switch (widgetSrc){
@@ -146,26 +143,24 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
         /*creating the back navigation arrow for navigating back to see previous steps*/
         Intent goToPreviousStep = new Intent(context, AppRecipeService.class);
         goToPreviousStep.setAction(AppRecipeService.ACTION_GO_TO_PREVIOUS_STEP);
-        if (mStepsEntries != null) {
-            goToNextStepIntent.putParcelableArrayListExtra(context.getString(R.string.goToNextStepIntentKey), (ArrayList<? extends Parcelable>) mStepsEntries);
-            goToPreviousStep.putParcelableArrayListExtra(context.getString(R.string.goToPrevioustepIntentKey), (ArrayList<? extends Parcelable>) mStepsEntries);
-        }
-        else
-            Log.e(TAG, "mStepsEntries == null");
+
+        Intent openInstructionActivity = new Intent(context, InstructionsActivity.class);
+
+        goToNextStepIntent.putParcelableArrayListExtra(context.getString(R.string.goToNextStepIntentKey), (ArrayList<? extends Parcelable>) mStepsEntries);
+        goToPreviousStep.putParcelableArrayListExtra(context.getString(R.string.goToPrevioustepIntentKey), (ArrayList<? extends Parcelable>) mStepsEntries);
+        openInstructionActivity.putParcelableArrayListExtra("ali", (ArrayList<? extends Parcelable>) mStepsEntries);
+        openInstructionActivity.putExtra(context.getString(R.string.ingredientIdKey), SharedPreferenceUtils.getMaxNumberOfSteps(context));
         PendingIntent goToNextStepPendingIndent =
                 PendingIntent.getService(context, 0, goToNextStepIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent goToPreviousStepPendingIntent =
                 PendingIntent.getService(context, 0, goToPreviousStep, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.next_description_image_widget, goToNextStepPendingIndent);
+        /*open the detail activity when the user click the text description text*/
+        PendingIntent openInstructionPendingIntent=
+                PendingIntent.getActivity(context, 0, openInstructionActivity, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.previous_description_image_widget, goToPreviousStepPendingIntent);
-        if (mStepsEntries != null){
-            Intent openInstructionActivity = new Intent(context, InstructionsActivity.class);
-            openInstructionActivity.putParcelableArrayListExtra("ali", (ArrayList<? extends Parcelable>) mStepsEntries);
-            openInstructionActivity.putExtra(context.getString(R.string.ingredientIdKey), SharedPreferenceUtils.getMaxNumberOfSteps(context));
-            PendingIntent openInstructionPendingIntent=
-                    PendingIntent.getActivity(context, 0, openInstructionActivity, PendingIntent.FLAG_UPDATE_CURRENT);
+        if (mStepsEntries!= null && SharedPreferenceUtils.getFavoriteRecipe(context) != -1)
             views.setOnClickPendingIntent(R.id.appwidget_description_text, openInstructionPendingIntent);
-        }
         // Instruct the widget manager to update the widget
         return views;
     }

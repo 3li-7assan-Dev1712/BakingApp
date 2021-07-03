@@ -3,7 +3,7 @@
     android:initialKeyguardLayout="@layout/recipe_widget_provider"
     android:initialLayout="@layout/recipe_widget_provider"
     android:minWidth="240dp"
-    android:minHeight="40dp"
+    android:minHeight="124dp"
     android:previewImage="@drawable/nutella_pie"
     android:resizeMode="vertical|horizontal"
     android:updatePeriodMillis="86400000"
