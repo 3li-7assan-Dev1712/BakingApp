@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relativeLayout"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <com.google.android.exoplayer2.ui.PlayerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/playerView" />
+        android:id="@+id/playerView"
+        app:show_timeout="10000"
+        app:fastforward_increment="30000"
+        app:rewind_increment="30000"
+        app:controller_layout_id="@layout/custom_buttons_exo_player"/>
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="296dp"
         android:id="@+id/noVideoImage"
-        android:src="@drawable/ic_baseline_close_24"
+        android:src="@drawable/ic_baseline_emoji_people_24"
         android:contentDescription="@string/todo"
         android:layout_centerInParent="true"
         android:visibility="invisible"/>
@@ -23,10 +27,11 @@
         android:contentDescription="@string/todo"
         android:layout_below="@id/noVideoImage"
         android:layout_marginTop="5dp"
-        android:text="@string/no_video_text"
+        android:text="@string/easy_step"
         android:textStyle="bold"
         android:layout_marginBottom="5dp"
-        android:textSize="16sp"
+        android:textSize="14sp"
+        android:drawableEnd="@drawable/ic_baseline_emoji_emotions_24"
         android:layout_centerHorizontal="true"
         android:visibility="invisible"/>
 </RelativeLayout>

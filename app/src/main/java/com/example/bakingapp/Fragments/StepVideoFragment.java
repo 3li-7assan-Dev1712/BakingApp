@@ -1,6 +1,5 @@
 package com.example.bakingapp.Fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +20,6 @@ public class StepVideoFragment extends Fragment {
     private String videoUrl;
     private PlayerView mPlayerView;
     private SimpleExoPlayer mSimpleExoPLayer;
-
-
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
     }

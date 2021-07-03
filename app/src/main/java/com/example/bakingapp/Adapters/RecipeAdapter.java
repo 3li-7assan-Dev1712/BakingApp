@@ -25,8 +25,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     public Context mContext;
     // now I'll just use a temporary list to provide the data for the adapter
     private List<RecipeEntry> entries;
-
-
     public interface ChooseRecipeInterface{
         void onChooseRecipe(int id);
     }
@@ -79,6 +77,20 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                 holder.fullStar.setVisibility(View.INVISIBLE);
                 holder.emptyStar.setVisibility(View.INVISIBLE);
             }
+            switch (position){
+                case 0:
+                    holder.recipeImage.setImageResource(R.drawable.nutella_pie);
+                    break;
+                case 1:
+                    holder.recipeImage.setImageResource(R.drawable.brownie);
+                    break;
+                case 2:
+                    holder.recipeImage.setImageResource(R.drawable.yellow_cake);
+                    break;
+                case 3:
+                    holder.recipeImage.setImageResource(R.drawable.cheese_cake);
+                    break;
+            }
         }
         Log.d(TAG, "data == null, cannot bind");
     }
@@ -97,11 +109,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         ImageView fullStar;
         ImageView emptyStar;
         TextView recipeName;
+        ImageView recipeImage;
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             recipeName = itemView.findViewById(R.id.recipeNameTextView);
             fullStar = itemView.findViewById(R.id.fullStar);
             emptyStar = itemView.findViewById(R.id.emptyStar);
+            recipeImage= itemView.findViewById(R.id.recipe_image);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }

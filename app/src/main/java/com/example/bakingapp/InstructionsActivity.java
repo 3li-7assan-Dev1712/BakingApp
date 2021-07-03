@@ -16,7 +16,7 @@ import com.example.bakingapp.Fragments.StepVideoFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InstructionsActivity extends AppCompatActivity {
+public class InstructionsActivity extends AppCompatActivity{
 
     private int ingredientId;
     private int stepsNumber;
@@ -26,14 +26,12 @@ public class InstructionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instructions);
-        if (findViewById(R.id.navigationLinearLayout) == null)
-            mLandscapeMode =true;
-        else
-            mLandscapeMode =false;
+        mLandscapeMode = findViewById(R.id.navigationLinearLayout) == null;
         Intent intent = getIntent();
         if (intent != null){
             ingredientId = intent.getIntExtra(getString(R.string.ingredientIdKey), 0);
             this.stepsEntries = intent.getParcelableArrayListExtra("ali");
+            assert stepsEntries != null;
             stepsNumber = stepsEntries.size();
         }
         String videoUrl = stepsEntries.get(ingredientId).getVideoUrl();
