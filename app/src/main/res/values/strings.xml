@@ -14,4 +14,5 @@
     <string name="todo">TODO</string>
     <string name="instruction_key">InstructionKey</string>
     <string name="no_video_text">Sorry, There\'s no video for this step!</string>
+    <string name="easy_step">Hey, this step is easy you can do it without a video!</string>
 </resources>
