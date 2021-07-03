@@ -6,6 +6,14 @@
     android:orientation="vertical"
     android:padding="@dimen/widget_margin">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/yellow_cake"
+        tools:src="@drawable/nutella_pie"
+        android:layout_marginTop="16dp"
+        android:id="@+id/iv_appwidget"/>
     <TextView
 
         android:id="@+id/appwidget_description_text"

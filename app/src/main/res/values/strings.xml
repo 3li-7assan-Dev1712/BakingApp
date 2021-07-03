@@ -22,4 +22,5 @@
     <string name="goToPrevioustepIntentKey">goToPreviousStep</string>
     <string name="sharedPreference">sharedKey</string>
     <string name="easy_step">Hey, this step is easy you can do it without a video!</string>
+    <string name="todo">custome_buttons</string>
 </resources>

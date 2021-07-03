@@ -69,6 +69,24 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
     public static RemoteViews getNormalRemoteViews(Context context, String stepDes){
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget_provider);
         views.setTextViewText(R.id.appwidget_description_text, stepDes);
+        int widgetSrc = SharedPreferenceUtils.getFavoriteRecipe(context);
+        switch (widgetSrc){
+            case 0:
+                views.setImageViewResource(R.id.iv_appwidget, R.drawable.nutella_pie);
+                break;
+            case 1:
+                views.setImageViewResource(R.id.iv_appwidget, R.drawable.brownie);
+                break;
+            case 2:
+                views.setImageViewResource(R.id.iv_appwidget, R.drawable.yellow_cake);
+                break;
+            case 3:
+                views.setImageViewResource(R.id.iv_appwidget, R.drawable.cheese_cake);
+                break;
+            default:
+                views.setImageViewResource(R.id.iv_appwidget, 0);
+        }
+
         /*create the intent to start out service to update the widget in the background*/
         Intent goToNextStepIntent = new Intent(context, AppRecipeService.class);
         goToNextStepIntent.setAction(AppRecipeService.ACTION_GO_TO_NEXT_STEP);
@@ -104,6 +122,24 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
     public static RemoteViews getLongRemoteViews(Context context, String stepDes){
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget_provider_aternative);
         views.setTextViewText(R.id.appwidget_description_text, stepDes);
+        int widgetSrc = SharedPreferenceUtils.getFavoriteRecipe(context);
+        switch (widgetSrc){
+            case 0:
+                views.setImageViewResource(R.id.iv_appwidget, R.drawable.nutella_pie);
+                break;
+            case 1:
+                views.setImageViewResource(R.id.iv_appwidget, R.drawable.brownie);
+                break;
+            case 2:
+                views.setImageViewResource(R.id.iv_appwidget, R.drawable.yellow_cake);
+                break;
+            case 3:
+                views.setImageViewResource(R.id.iv_appwidget, R.drawable.cheese_cake);
+                break;
+            default:
+                views.setImageViewResource(R.id.iv_appwidget, 0);
+        }
+
         /*create the intent to start out service to update the widget in the background*/
         Intent goToNextStepIntent = new Intent(context, AppRecipeService.class);
         goToNextStepIntent.setAction(AppRecipeService.ACTION_GO_TO_NEXT_STEP);
