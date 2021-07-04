@@ -9,8 +9,7 @@
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp"
     android:elevation="4dp"
-    android:padding="16dp"
-    android:background="@drawable/recipe_touch_selector">
+    android:padding="16dp" >
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -19,6 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:id="@+id/fast_food_background"
             android:src="@drawable/ic_baseline_fastfood_24" />
         <TextView
             android:paddingStart="16dp"

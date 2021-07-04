@@ -26,7 +26,6 @@
         android:textAllCaps="false"
         android:textColor="@android:color/black"
         android:text="@string/button_see_ingredients"
-        tools:text="@string/button_see_ingredients"
-        android:background="@drawable/touch_selector"/>
+        tools:text="@string/button_see_ingredients" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

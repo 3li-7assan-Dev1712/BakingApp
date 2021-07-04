@@ -1,6 +1,7 @@
 package com.example.bakingapp.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
 
 public class StepVideoFragment extends Fragment {
+    private static final String TAG = StepVideoFragment.class.getSimpleName();
     private String videoUrl;
     private PlayerView mPlayerView;
     private SimpleExoPlayer mSimpleExoPLayer;
@@ -66,5 +68,6 @@ public class StepVideoFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         mSimpleExoPLayer.release();
+        Log.d(TAG, "released player in onDestroy");
     }
 }

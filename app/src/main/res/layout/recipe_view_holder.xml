@@ -17,7 +17,6 @@
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp"
     android:elevation="4dp"
-    android:background="@drawable/touch_selector"
     >
 
     <!-- In the MainActivity I'm just going to put the recipes name so the user

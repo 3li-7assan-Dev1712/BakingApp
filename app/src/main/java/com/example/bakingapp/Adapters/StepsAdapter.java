@@ -52,8 +52,9 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
            String shortDes = stepsEntries.get(position).getShortDescription();
            holder.stepTextView.setText(shortDes);
            if (mLandscapeModed) {
+               holder.itemView.findViewById(R.id.fast_food_background).setVisibility(View.INVISIBLE);
                if (position == rowNo) holder.itemView.setBackgroundColor(mContext.getColor(R.color.colorAccent));
-               else holder.itemView.setBackgroundColor(mContext.getColor(R.color.colorPrimaryDark));
+               else holder.itemView.setBackgroundColor(mContext.getColor(R.color.lightStepColor));
                holder.itemView.setOnClickListener(v -> {
                    viewStepInterface.onClickStep(position);
                    rowNo = position;

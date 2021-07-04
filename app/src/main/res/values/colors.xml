@@ -7,5 +7,6 @@
     <color name="colorSecondaryText">#757575</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="activated">#E0E0E0</color>
-    <color name="colorWidgetBackground">#50cccccc</color>
+    <color name="colorWidgetBackground">#F8D3D0</color>
+    <color name="lightStepColor">#B0FDE3DF</color>
 </resources>
