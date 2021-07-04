@@ -39,6 +39,7 @@ public class InstructionsActivity extends AppCompatActivity{
         String videoUrl = stepsEntries.get(ingredientId).getVideoUrl();
         String description = stepsEntries.get(ingredientId).getDescription();
         populateUi(videoUrl, description, savedInstanceState);
+        FragmentManager manager = getSupportFragmentManager();
         /*if the orientation is not landscape we can create our navigation arrows*/
         if (!mLandscapeMode) {
             ImageView backArrow = findViewById(R.id.goToPrevious);
@@ -50,13 +51,12 @@ public class InstructionsActivity extends AppCompatActivity{
                     Toast.makeText(this, "There's no previous steps", Toast.LENGTH_SHORT).show();
                     ingredientId += 1;
                 } else {
-                    openTheSameActivity.putExtra(getString(R.string.ingredientIdKey), ingredientId);
-                    openTheSameActivity.putParcelableArrayListExtra("ali", (ArrayList<? extends Parcelable>) stepsEntries);
-                    // kill the current Activity before navigating to second one for two reason:
-                    // 1- It's no longer need and the user will not expect they need to return to it (will use the navigation arrows)
-                    //  2- free up the memory for smooth user experience.
-                    finish();
-                    startActivity(openTheSameActivity);
+                    DescriptionFragment descriptionFragment = new DescriptionFragment();
+                    descriptionFragment.setDescription(stepsEntries.get(ingredientId).getDescription());
+                    StepVideoFragment stepVideoFragment = new StepVideoFragment();
+                    stepVideoFragment.setVideoUrl(stepsEntries.get(ingredientId).getVideoUrl());
+                    manager.beginTransaction().replace(R.id.frameLayout, stepVideoFragment)
+                    .replace(R.id.descriptionFragment, descriptionFragment).commit();
                 }
             });
             nextArrow.setOnClickListener(v -> {
@@ -66,10 +66,12 @@ public class InstructionsActivity extends AppCompatActivity{
                     Toast.makeText(this, "There's no next steps to view, this is the last step", Toast.LENGTH_SHORT).show();
                     ingredientId -= 1;
                 } else {
-                    openTheSameActivity.putExtra(getString(R.string.ingredientIdKey), ingredientId);
-                    openTheSameActivity.putParcelableArrayListExtra("ali", (ArrayList<? extends Parcelable>) stepsEntries);
-                    finish();
-                    startActivity(openTheSameActivity);
+                    DescriptionFragment descriptionFragment = new DescriptionFragment();
+                    descriptionFragment.setDescription(stepsEntries.get(ingredientId).getDescription());
+                    StepVideoFragment stepVideoFragment = new StepVideoFragment();
+                    stepVideoFragment.setVideoUrl(stepsEntries.get(ingredientId).getVideoUrl());
+                    manager.beginTransaction().replace(R.id.frameLayout, stepVideoFragment)
+                            .replace(R.id.descriptionFragment, descriptionFragment).commit();
                 }
             });
         }

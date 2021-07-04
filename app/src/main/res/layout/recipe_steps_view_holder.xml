@@ -9,7 +9,8 @@
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp"
     android:elevation="4dp"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/recipe_touch_selector">
 
     <TextView
         android:paddingStart="16dp"

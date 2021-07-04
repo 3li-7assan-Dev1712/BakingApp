@@ -1,6 +1,7 @@
 package com.example.bakingapp.Adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bakingapp.Entries.StepsEntry;
@@ -19,6 +21,13 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
 
     private Context mContext;
     private List<StepsEntry> stepsEntries;
+    private boolean mLandscapeModed;
+    private int rowNo = 0;
+
+    public void setmLandscapeModed(boolean mLandscapeModed) {
+        this.mLandscapeModed = mLandscapeModed;
+    }
+
     public interface ViewStepInterface{
         void onClickStep(int id);
     }
@@ -36,11 +45,21 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
         return new StepsViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull StepsViewHolder holder, int position) {
        if (stepsEntries != null){
            String shortDes = stepsEntries.get(position).getShortDescription();
            holder.stepTextView.setText(shortDes);
+           if (mLandscapeModed) {
+               if (position == rowNo) holder.itemView.setBackgroundColor(mContext.getColor(R.color.colorAccent));
+               else holder.itemView.setBackgroundColor(mContext.getColor(R.color.colorPrimaryDark));
+               holder.itemView.setOnClickListener(v -> {
+                   viewStepInterface.onClickStep(position);
+                   rowNo = position;
+                   notifyDataSetChanged();
+               });
+           }
        }
     }
 

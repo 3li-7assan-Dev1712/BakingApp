@@ -1,11 +1,15 @@
 package com.example.bakingapp.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -52,6 +56,16 @@ public class RecipeStepsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         StepsAdapter stepsAdapter = new StepsAdapter(getContext(), (StepsAdapter.ViewStepInterface) getContext());
         stepsAdapter.setStepsList(stepsEntries);
+        Display display =  ((WindowManager) getContext().getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int rot = display.getRotation();
+        switch (rot){
+            case Surface.ROTATION_0:
+                stepsAdapter.setmLandscapeModed(false);
+                break;
+            case Surface.ROTATION_90:
+                stepsAdapter.setmLandscapeModed(true);
+                break;
+        }
         recyclerView.setAdapter(stepsAdapter);
 
         Button btn = view.findViewById(R.id.seeIngredientsButton);
