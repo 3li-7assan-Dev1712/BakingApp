@@ -5,29 +5,69 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="wrap_content"
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp"
     android:elevation="4dp"
     android:background="@drawable/touch_selector"
     >
 
-    <!-- In the MainActivity I'm just going to put the recipes name so the user can choose their favorite one    -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="@android:color/black"
-        android:id="@+id/recipeNameTextView"
-        android:layout_gravity="center_vertical"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+    <!-- In the MainActivity I'm just going to put the recipes name so the user
+     can choose their favorite one    -->
 
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top">
+            <ImageView
+                android:id="@+id/fullStar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_star_24"
+                android:contentDescription="@string/todo"
+                android:visibility="gone"
+                android:padding="16dp"
+                />
+            <ImageView
+                android:id="@+id/emptyStar"
+                android:src="@drawable/ic_baseline_star_border_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/todo"
+                android:visibility="invisible"
+                android:padding="16dp"
+                />
+        </FrameLayout>
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:contentDescription="@string/todo"
+            android:id="@+id/recipe_image"
+            android:layout_gravity="center_horizontal" />
+        <!-- In the MainActivity I'm just going to put the recipes name so the user can choose their favorite one    -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:id="@+id/recipeNameTextView"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            tools:text= "Notilla Pie"/>
+
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

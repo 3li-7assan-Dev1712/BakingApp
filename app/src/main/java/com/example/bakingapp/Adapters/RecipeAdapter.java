@@ -1,24 +1,28 @@
 package com.example.bakingapp.Adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bakingapp.Entries.RecipeEntry;
 import com.example.bakingapp.R;
+import com.example.bakingapp.SharedPreferenceUtils;
 
 import java.util.List;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>  {
 
     private static final String TAG = RecipeAdapter.class.getSimpleName();
-    private Context mContext;
+    public Context mContext;
     // now I'll just use a temporary list to provide the data for the adapter
     private List<RecipeEntry> entries;
     public interface ChooseRecipeInterface{
@@ -26,9 +30,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     }
     public static ChooseRecipeInterface chooseRecipeInterface;
 
-    public RecipeAdapter(Context mContext, ChooseRecipeInterface recipeInterface) {
-        this.mContext = mContext;
+    public interface SelectPreferedRecipe{
+        void onSelectPreferedRecipe(int id, View view);
+    }
+    public static SelectPreferedRecipe selectPreferedRecipe;
+
+    public RecipeAdapter(Context pContext, ChooseRecipeInterface recipeInterface, SelectPreferedRecipe pSelectPreferedRecipe) {
+        mContext = pContext;
         chooseRecipeInterface = recipeInterface;
+        selectPreferedRecipe = pSelectPreferedRecipe;
     }
 
     public void setRecipesName(List<RecipeEntry> entries) {
@@ -59,6 +69,28 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             Log.d(TAG, "binding in onBind");
             String recipeName = entries.get(position).getRecipeName();
             holder.recipeName.setText(recipeName);
+            int favoriteRecipe = SharedPreferenceUtils.getFavoriteRecipe(mContext);
+            if (position == favoriteRecipe){
+                holder.emptyStar.setVisibility(View.GONE);
+                holder.fullStar.setVisibility(View.VISIBLE);
+            }else{
+                holder.fullStar.setVisibility(View.INVISIBLE);
+                holder.emptyStar.setVisibility(View.INVISIBLE);
+            }
+            switch (position){
+                case 0:
+                    holder.recipeImage.setImageResource(R.drawable.nutella_pie);
+                    break;
+                case 1:
+                    holder.recipeImage.setImageResource(R.drawable.brownie);
+                    break;
+                case 2:
+                    holder.recipeImage.setImageResource(R.drawable.yellow_cake);
+                    break;
+                case 3:
+                    holder.recipeImage.setImageResource(R.drawable.cheese_cake);
+                    break;
+            }
         }
         Log.d(TAG, "data == null, cannot bind");
     }
@@ -72,18 +104,31 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             return 0;
     }
 
-    static class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
+        ImageView fullStar;
+        ImageView emptyStar;
         TextView recipeName;
+        ImageView recipeImage;
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             recipeName = itemView.findViewById(R.id.recipeNameTextView);
+            fullStar = itemView.findViewById(R.id.fullStar);
+            emptyStar = itemView.findViewById(R.id.emptyStar);
+            recipeImage= itemView.findViewById(R.id.recipe_image);
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             chooseRecipeInterface.onChooseRecipe(getBindingAdapterPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            selectPreferedRecipe.onSelectPreferedRecipe(getBindingAdapterPosition(), v);
+            return true;
         }
     }
 }

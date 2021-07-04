@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    android:padding="@dimen/widget_margin">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_appwidget"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="8dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_appwidget">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/previous_description_image_widget"
+            android:src="@drawable/ic_baseline_chevron_left_24"
+            android:contentDescription="@string/see_next_des_widget"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+
+            android:id="@+id/appwidget_description_text"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:contentDescription="@string/appwidget_text"
+            tools:text="@string/appwidget_text"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/next_description_image_widget"
+            android:src="@drawable/ic_baseline_chevron_right_24"
+            android:contentDescription="@string/see_next_des_widget"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
+</RelativeLayout>

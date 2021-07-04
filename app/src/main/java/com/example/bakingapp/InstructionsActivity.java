@@ -3,7 +3,6 @@ package com.example.bakingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -19,7 +18,6 @@ import java.util.List;
 
 public class InstructionsActivity extends AppCompatActivity{
 
-    private static final String TAG = InstructionsActivity.class.getSimpleName();
     private int ingredientId;
     private int stepsNumber;
     private List<StepsEntry> stepsEntries;
@@ -75,7 +73,6 @@ public class InstructionsActivity extends AppCompatActivity{
                 }
             });
         }
-        Log.d(TAG, "onCreate");
     }
 
     private void populateUi(String videoUrl, String description, Bundle saveInstanceState) {
@@ -94,4 +91,5 @@ public class InstructionsActivity extends AppCompatActivity{
             manager.beginTransaction().add(R.id.frameLayout, stepVideoFragment).commit();
         }
     }
+
 }

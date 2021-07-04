@@ -5,22 +5,32 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_margin="10dp"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
+    android:layout_height="wrap_content"
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp"
     android:elevation="4dp"
     android:padding="16dp"
     android:background="@drawable/recipe_touch_selector">
 
-    <TextView
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:layout_gravity="center_vertical"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/recipeStepsTextView"
-        android:textSize="16sp"
-        android:textColor="@android:color/black" />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_baseline_fastfood_24" />
+        <TextView
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recipeStepsTextView"
+            android:textSize="16sp"
+            android:textColor="@android:color/black" />
+    </FrameLayout>
+
 
 </androidx.cardview.widget.CardView>
 

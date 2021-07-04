@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    android:orientation="vertical"
+    android:padding="@dimen/widget_margin">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/yellow_cake"
+        tools:src="@drawable/nutella_pie"
+        android:layout_marginTop="16dp"
+        android:id="@+id/iv_appwidget"/>
+    <TextView
+
+        android:id="@+id/appwidget_description_text"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/appwidget_text"
+        tools:text="@string/appwidget_text"
+        android:layout_gravity="center_vertical"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/previous_description_image_widget"
+            android:src="@drawable/ic_baseline_chevron_left_24"
+            android:contentDescription="@string/see_next_des_widget"
+            android:layout_gravity="center_vertical"
+            android:padding="16dp"
+            android:layout_marginStart="8dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/next_description_image_widget"
+            android:src="@drawable/ic_baseline_chevron_right_24"
+            android:contentDescription="@string/see_next_des_widget"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_vertical"
+            android:padding="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"/>
+    </RelativeLayout>
+
+
+</LinearLayout>
