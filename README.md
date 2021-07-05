@@ -17,13 +17,13 @@ the user can have a recipe widget in the home screen to keep cooking while the a
 
  <b>Screenshots</b></br>
  Phone:</br>
- <img src="https://github.com/3li-7assan-Dev1712/BakingApp/blob/master/recipe_app_phone_01" alt="BakingApp Phone Screenshot">
- <img src="https://github.com/3li-7assan-Dev1712/BakingApp/blob/master/recipe_app_phone_02" alt="BakingApp Phone Screenshot">
- <img src="https://github.com/3li-7assan-Dev1712/BakingApp/blob/master/recipe_app_phone_03" alt="BakingApp Phone Screenshot"></br>
+ <img src="https://github.com/3li-7assan-Dev1712/Baking_App/blob/master/recipe_app_phone_01.png" alt="BakingApp Phone Screenshot">
+ <img src="https://github.com/3li-7assan-Dev1712/Baking_App/blob/master/recipe_app_phone_02.png" alt="BakingApp Phone Screenshot">
+ <img src="https://github.com/3li-7assan-Dev1712/Baking_App/blob/master/recipe_app_phone_03.png" alt="BakingApp Phone Screenshot"></br>
  Tablet:</br>
- <img src="https://github.com/3li-7assan-Dev1712/BakingApp/blob/master/recipe_app_tablet_01" alt="BakingApp Tablet Screenshot">
- <img src="https://github.com/3li-7assan-Dev1712/BakingApp/blob/master/recipe_app_tablet_02" alt="BakingApp Tablet Screenshot">
- <img src="https://github.com/3li-7assan-Dev1712/BakingApp/blob/master/recipe_app_tablet_03" alt="BakingApp Tablet Screenshot">
+ <img src="https://github.com/3li-7assan-Dev1712/Baking_App/blob/master/recipe_app_tablet_01.png" alt="BakingApp Tablet Screenshot">
+ <img src="https://github.com/3li-7assan-Dev1712/Baking_App/blob/master/recipe_app_tablet_02.png" alt="BakingApp Tablet Screenshot">
+ <img src="https://github.com/3li-7assan-Dev1712/Baking_App/blob/master/recipe_app_tablet_03.png" alt="BakingApp Tablet Screenshot">
  </br>
 
     </br></br>
