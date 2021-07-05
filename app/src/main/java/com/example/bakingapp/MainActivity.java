@@ -188,7 +188,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         Log.d(TAG, "loader has finished");
         waitTillResponseProgressBar.setVisibility(View.INVISIBLE);
-
         try {
             List<RecipeEntry> recipeEntries = JsonDbUtils.getRecipeEntries(data);
             recipeAdapter.setRecipesName(recipeEntries);
@@ -202,8 +201,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 mBakingDatabase.stepsDao().addAllSteps(stepsEntries);
                 mBakingDatabase.ingredientDao().addAllIngredients(ingredientEntries);
             });
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
