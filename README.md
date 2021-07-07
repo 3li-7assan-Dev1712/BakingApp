@@ -13,7 +13,7 @@ click to the recipe and press the star icon, and the recipe will be visible in t
 The app supports a dynamic User Interface to still compatible across all devices and tables with different sizes and resolutions with
 the help of Fragments. It uses the Android Architecture Component (Room, LiveData and ViewModel) to store the data, in addition to that
 it uses the ExoPlayer library as a VideoPlayer to play the recipe videos along with custom buttons for the player, and finally
-the user can have a recipe widget in the home screen to keep cooking while the app is in the background with the help of widgets.
+the user can have a recipe widget in the home screen to keep cooking while the app is in the background with the help of widgets!.
 
  <b>Screenshots</b></br>
  Phone:</br>
