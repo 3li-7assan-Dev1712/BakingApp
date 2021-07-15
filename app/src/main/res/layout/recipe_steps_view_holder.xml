@@ -9,7 +9,9 @@
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp"
     android:elevation="4dp"
-    android:padding="16dp" >
+    android:padding="16dp"
+    android:stateListAnimator="@animator/raise_view_holder"
+    android:background="@drawable/step_view_holder_background">
 
     <FrameLayout
         android:layout_width="match_parent"
