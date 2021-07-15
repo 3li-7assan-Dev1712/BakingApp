@@ -1,10 +1,12 @@
 package com.example.bakingapp.Adapters;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -58,6 +60,14 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
                holder.itemView.setOnClickListener(v -> {
                    viewStepInterface.onClickStep(position);
                    rowNo = position;
+                   int finalRadius = (int) Math.hypot(holder.itemView.getWidth()/2f, holder.itemView.getHeight()/2f);
+                   Animator animator = ViewAnimationUtils.createCircularReveal(holder.itemView,
+                           holder.itemView.getWidth()/2,
+                           holder.itemView.getHeight()/2,
+                           0,
+                           finalRadius);
+                   holder.itemView.setBackgroundColor(mContext.getColor(R.color.colorAccent));
+                   animator.start();
                    notifyDataSetChanged();
                });
            }
