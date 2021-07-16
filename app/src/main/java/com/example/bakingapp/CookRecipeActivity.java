@@ -20,6 +20,7 @@ import com.example.bakingapp.Fragments.StepVideoFragment;
 import com.example.bakingapp.ViewModels.LoadStepsViewModel;
 import com.example.bakingapp.ViewModels.LoadStepsViewModelFactory;
 import com.example.bakingapp.database.BakingDatabase;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cook_recipe);
+        ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout)).setTitle("MyTitle");
         mTowPane = findViewById(R.id.separaterView) != null;
         Log.d("ali", "mTwoPane is " + mTowPane);
         Intent intent = getIntent();

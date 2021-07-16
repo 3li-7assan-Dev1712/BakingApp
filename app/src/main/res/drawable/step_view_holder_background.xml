@@ -2,11 +2,11 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_pressed="true" android:state_enabled="true"
-        android:drawable="@color/colorAccent"
-   />
+        android:color="@color/colorAccent"
+        />
     <item android:state_active="true"
-          android:drawable="@color/colorAccent"
+          android:color="@color/colorAccent"
         />
     <item
-        android:drawable="@android:color/white" />
+        android:color="@android:color/white" />
 </selector>
