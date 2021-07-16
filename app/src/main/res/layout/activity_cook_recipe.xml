@@ -2,14 +2,18 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/root_coord_layout" >
+    android:id="@+id/root_coord_layout"
+    tools:context=".CookRecipeActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="168dp"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true"
+       >
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -17,7 +21,18 @@
             app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title.Inverse"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title.Inverse"
             app:expandedTitleMarginStart="72dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed" >
+            app:contentScrim="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+            android:fitsSystemWindows="true">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_collapseMode="parallax"
+                android:fitsSystemWindows="true"
+                app:layout_collapseParallaxMultiplier=".7"
+                android:id="@+id/recipe_collapsing_image"
+                android:src="@drawable/yellow_cake"
+                />
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
@@ -25,6 +40,7 @@
                 android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
                 app:contentInsetStart="72dp"
                 app:layout_collapseMode="pin" />
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 

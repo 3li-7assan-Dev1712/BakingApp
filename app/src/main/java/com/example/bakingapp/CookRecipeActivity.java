@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -78,8 +79,14 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
 
         /*implementing the collapsing layout */
         if(getResources().getBoolean(R.bool.use_coordinator_layout)) {
+
+
 //            /*set the appropriate title*/
-            ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout)).setTitle(JsonConstants.getRecipeName(recipeId));
+            CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
+            toolbarLayout.setContentScrimColor(getResources().getColor(R.color.colorPrimary));
+            toolbarLayout.setTitle(JsonConstants.getRecipeName(recipeId));
+           /* ImageView imageView = findViewById(R.id.recipe_collapsing_image);
+            imageView.setImageResource(JsonConstants.getImageId(recipeId));*/
             Toast.makeText(this, "True", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "True");
 
