@@ -48,27 +48,29 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
         return new StepsViewHolder(view);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     @Override
     public void onBindViewHolder(@NonNull StepsViewHolder holder, int position) {
        if (stepsEntries != null){
            String shortDes = stepsEntries.get(position).getShortDescription();
            holder.stepTextView.setText(shortDes);
-           if (mLandscapeModed && Util.SDK_INT >= 23) {
+           if (mLandscapeModed) {
                holder.itemView.findViewById(R.id.fast_food_background).setVisibility(View.INVISIBLE);
-               if (position == rowNo) holder.itemView.setBackgroundColor(mContext.getColor(R.color.colorAccent));
-               else holder.itemView.setBackgroundColor(mContext.getColor(R.color.lightStepColor));
+               if (position == rowNo) holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+               else  holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.lightStepColor));
                holder.itemView.setOnClickListener(v -> {
                    viewStepInterface.onClickStep(position);
                    rowNo = position;
-                   int finalRadius = (int) Math.hypot(holder.itemView.getWidth()/2f, holder.itemView.getHeight()/2f);
-                   Animator animator = ViewAnimationUtils.createCircularReveal(holder.itemView,
-                           holder.itemView.getWidth()/2,
-                           holder.itemView.getHeight()/2,
-                           0,
-                           finalRadius);
-                   holder.itemView.setBackgroundColor(mContext.getColor(R.color.colorAccent));
-                   animator.start();
+                   if (Util.SDK_INT >= 22) {
+                       int finalRadius = (int) Math.hypot(holder.itemView.getWidth() / 2f, holder.itemView.getHeight() / 2f);
+                       Animator animator = ViewAnimationUtils.createCircularReveal(holder.itemView,
+                               holder.itemView.getWidth() / 2,
+                               holder.itemView.getHeight() / 2,
+                               0,
+                               finalRadius);
+                       holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+                       animator.start();
+                   }
                    notifyDataSetChanged();
                });
            }
