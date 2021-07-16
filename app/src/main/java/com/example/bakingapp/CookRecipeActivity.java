@@ -17,6 +17,7 @@ import com.example.bakingapp.Entries.StepsEntry;
 import com.example.bakingapp.Fragments.DescriptionFragment;
 import com.example.bakingapp.Fragments.RecipeStepsFragment;
 import com.example.bakingapp.Fragments.StepVideoFragment;
+import com.example.bakingapp.JsonRef.JsonConstants;
 import com.example.bakingapp.ViewModels.LoadStepsViewModel;
 import com.example.bakingapp.ViewModels.LoadStepsViewModelFactory;
 import com.example.bakingapp.database.BakingDatabase;
@@ -34,11 +35,7 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cook_recipe);
-        if(getResources().getBoolean(R.bool.use_coordinator_layout)) {
-            ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout)).setTitle("MyTitle");
-            Toast.makeText(this, "True", Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "True");
-        }
+
         mTowPane = findViewById(R.id.separaterView) != null;
         Log.d("ali", "mTwoPane is " + mTowPane);
         Intent intent = getIntent();
@@ -78,6 +75,15 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
                 manager.beginTransaction().add(R.id.frameLayout, stepVideoFragment).commit();
             }
         });
+
+        /*implementing the collapsing layout */
+        if(getResources().getBoolean(R.bool.use_coordinator_layout)) {
+//            /*set the appropriate title*/
+            ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout)).setTitle(JsonConstants.getRecipeName(recipeId));
+            Toast.makeText(this, "True", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "True");
+
+        }
     }
     @Override
     public void onClickStep(int id) {

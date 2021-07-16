@@ -28,4 +28,17 @@ public enum JsonConstants {;
             R.drawable.unit
     };
 
+    public static String[] recipesNames = {"Nutella Pie", "Brownies", "Yellow Cake", "Cheesecake"};
+    public static String getRecipeName(int recipeIndex){
+        return recipesNames[recipeIndex];
+    }
+    public static int[] imagesIds = {
+            R.drawable.nutella_pie,
+            R.drawable.brownie,
+            R.drawable.yellow_cake,
+            R.drawable.cheese_cake
+    };
+    public static int getImageId(int recipeIndex){
+        return imagesIds[recipeIndex];
+    }
 }
