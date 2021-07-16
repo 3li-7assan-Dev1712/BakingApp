@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bakingapp.Entries.StepsEntry;
 import com.example.bakingapp.R;
+import com.google.android.exoplayer2.util.Util;
 
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
        if (stepsEntries != null){
            String shortDes = stepsEntries.get(position).getShortDescription();
            holder.stepTextView.setText(shortDes);
-           if (mLandscapeModed) {
+           if (mLandscapeModed && Util.SDK_INT >= 23) {
                holder.itemView.findViewById(R.id.fast_food_background).setVisibility(View.INVISIBLE);
                if (position == rowNo) holder.itemView.setBackgroundColor(mContext.getColor(R.color.colorAccent));
                else holder.itemView.setBackgroundColor(mContext.getColor(R.color.lightStepColor));

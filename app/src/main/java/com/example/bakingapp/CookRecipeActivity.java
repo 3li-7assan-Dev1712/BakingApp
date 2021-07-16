@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CookRecipeActivity extends AppCompatActivity implements StepsAdapter.ViewStepInterface {
+    private static final String TAG = CookRecipeActivity.class.getSimpleName();
     private int recipeId;
     private boolean mTowPane;
     private List<StepsEntry>  stepsEntries;
@@ -33,7 +34,11 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cook_recipe);
-        ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout)).setTitle("MyTitle");
+        if(getResources().getBoolean(R.bool.use_coordinator_layout)) {
+            ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout)).setTitle("MyTitle");
+            Toast.makeText(this, "True", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "True");
+        }
         mTowPane = findViewById(R.id.separaterView) != null;
         Log.d("ali", "mTwoPane is " + mTowPane);
         Intent intent = getIntent();
