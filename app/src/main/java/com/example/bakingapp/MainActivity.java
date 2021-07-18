@@ -1,5 +1,6 @@
 package com.example.bakingapp;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import com.example.bakingapp.ViewModels.LoadStepsViewModelFactory;
 import com.example.bakingapp.ViewModels.RecipesViewModel;
 import com.example.bakingapp.database.AppExcecuters;
 import com.example.bakingapp.database.BakingDatabase;
+import com.google.android.exoplayer2.util.Util;
 
 import java.io.IOException;
 import java.util.List;
@@ -215,7 +217,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onChooseRecipe(int id) {
         Intent openCookRecipeActivity = new Intent(MainActivity.this, CookRecipeActivity.class);
         openCookRecipeActivity.putExtra(getString(R.string.open_cook_activity_key), id);
-        startActivity(openCookRecipeActivity);
+        /*creating a bundle to use it in the exit transition*/
+        if (Util.SDK_INT >= 21) {
+            /*this transition is supported start from api level 21 and above so I need to put this code in this block*/
+            Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
+            startActivity(openCookRecipeActivity, bundle);
+        }else {
+            startActivity(openCookRecipeActivity);
+        }
     }
 
     @Override
