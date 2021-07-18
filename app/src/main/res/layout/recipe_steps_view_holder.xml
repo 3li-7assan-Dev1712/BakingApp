@@ -3,7 +3,8 @@
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:stateListAnimator="@animator/raise_view_holder">
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -11,7 +12,7 @@
         android:id="@+id/fast_food_background"
         android:src="@drawable/ic_baseline_fastfood_24"
         android:contentDescription="@string/easy_step"
-        android:stateListAnimator="@animator/raise_view_holder"/>
+       />
     <TextView
         android:paddingStart="16dp"
         android:paddingEnd="16dp"

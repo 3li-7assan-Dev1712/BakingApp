@@ -3,7 +3,10 @@ package com.example.bakingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -22,6 +25,7 @@ import com.example.bakingapp.JsonRef.JsonConstants;
 import com.example.bakingapp.ViewModels.LoadStepsViewModel;
 import com.example.bakingapp.ViewModels.LoadStepsViewModelFactory;
 import com.example.bakingapp.database.BakingDatabase;
+import com.google.android.exoplayer2.util.Util;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.util.ArrayList;
@@ -75,6 +79,18 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
                 stepVideoFragment.setVideoUrl(videoUrl);
                 manager.beginTransaction().add(R.id.frameLayout, stepVideoFragment).commit();
             }
+
+
+            if (Util.SDK_INT >= 21) {
+                Slide slide = new Slide(Gravity.BOTTOM);
+                slide.addTarget(R.id.constraint_fragment);
+                slide.setInterpolator(AnimationUtils.loadInterpolator(this,
+                        android.R.interpolator.linear_out_slow_in));
+                slide.setDuration(2000);
+                getWindow().setEnterTransition(slide);
+                Toast.makeText(this, "transition works", Toast.LENGTH_SHORT).show();
+            }
+
         });
 
         /*implementing the collapsing layout */
