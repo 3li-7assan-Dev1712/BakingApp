@@ -32,7 +32,7 @@
                 app:layout_collapseParallaxMultiplier=".7"
                 android:id="@+id/recipe_collapsing_image"
                 android:src="@drawable/yellow_cake"
-                />
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"

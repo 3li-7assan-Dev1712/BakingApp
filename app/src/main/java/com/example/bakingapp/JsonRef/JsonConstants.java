@@ -30,7 +30,9 @@ public enum JsonConstants {;
 
     public static String[] recipesNames = {"Nutella Pie", "Brownies", "Yellow Cake", "Cheesecake"};
     public static String getRecipeName(int recipeIndex){
-        return recipesNames[recipeIndex];
+        /*because of the indexes in arrays start from 0, and my index starts from 1
+        * I should always use index-1*/
+        return recipesNames[recipeIndex-1];
     }
     public static int[] imagesIds = {
             R.drawable.nutella_pie,
@@ -39,6 +41,6 @@ public enum JsonConstants {;
             R.drawable.cheese_cake
     };
     public static int getImageId(int recipeIndex){
-        return imagesIds[recipeIndex];
+        return imagesIds[recipeIndex-1];
     }
 }

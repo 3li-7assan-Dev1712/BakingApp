@@ -82,11 +82,10 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
 
 
 //            /*set the appropriate title*/
-            CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
-            toolbarLayout.setContentScrimColor(getResources().getColor(R.color.colorPrimary));
+            CollapsingToolbarLayout toolbarLayout = findViewById(R.id.collapsing_toolbar_layout);
             toolbarLayout.setTitle(JsonConstants.getRecipeName(recipeId));
-           /* ImageView imageView = findViewById(R.id.recipe_collapsing_image);
-            imageView.setImageResource(JsonConstants.getImageId(recipeId));*/
+            ImageView imageView = findViewById(R.id.recipe_collapsing_image);
+            imageView.setImageResource(JsonConstants.getImageId(recipeId));
             Toast.makeText(this, "True", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "True");
 

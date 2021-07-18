@@ -56,21 +56,22 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
            holder.stepTextView.setText(shortDes);
            if (mLandscapeModed) {
                holder.itemView.findViewById(R.id.fast_food_background).setVisibility(View.INVISIBLE);
-               if (position == rowNo) holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.secondaryDarkColor));
+               if (Util.SDK_INT >= 22 && position == rowNo) {
+                   int finalRadius = (int) Math.hypot(holder.itemView.getWidth() / 2f, holder.itemView.getHeight() / 2f);
+                   Animator animator = ViewAnimationUtils.createCircularReveal(holder.itemView,
+                           holder.itemView.getWidth() / 2,
+                           holder.itemView.getHeight() / 2,
+                           0,
+                           finalRadius);
+                   holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+                   animator.start();
+               }else if(position == rowNo){
+                   holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+               }
                else  holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.lightStepColor));
                holder.itemView.setOnClickListener(v -> {
                    viewStepInterface.onClickStep(position);
                    rowNo = position;
-                   if (Util.SDK_INT >= 22) {
-                       int finalRadius = (int) Math.hypot(holder.itemView.getWidth() / 2f, holder.itemView.getHeight() / 2f);
-                       Animator animator = ViewAnimationUtils.createCircularReveal(holder.itemView,
-                               holder.itemView.getWidth() / 2,
-                               holder.itemView.getHeight() / 2,
-                               0,
-                               finalRadius);
-                       holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.secondaryDarkColor));
-                       animator.start();
-                   }
                    notifyDataSetChanged();
                });
            }
