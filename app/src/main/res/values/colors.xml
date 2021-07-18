@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <color name="colorPrimary">#1ea8a3</color>
+    <color name="primaryLightColor">#61dad4</color>
+    <color name="colorPrimaryDark">#007874</color>
+    <color name="colorAccent">#a81e23</color>
+    <color name="lightStepColor">#e0544b</color>
+    <color name="secondaryDarkColor">#720000</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#ffffff</color>
+
+    <color name="activated">#E0E0E0</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
+    <color name="colorWidgetBackground">#F8D3D0</color>
+    <color name="colorWhite">#FFFFFF</color>
+</resources>
+
+<!--
+
+
+
+
+
+
 <resources>
     <color name="colorPrimary">#59424045</color>
     <color name="colorPrimaryDark">#98979A</color>
@@ -10,3 +35,4 @@
     <color name="colorWidgetBackground">#F8D3D0</color>
     <color name="lightStepColor">#B0FDE3DF</color>
 </resources>
+-->

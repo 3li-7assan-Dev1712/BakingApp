@@ -14,5 +14,5 @@ it with a scroll view-->
         android:id="@+id/instructionsTextView"
         android:paddingStart="5dp"
         android:paddingEnd="3dp"
-        />
+        android:fontFamily="sans-serif"/>
 </ScrollView>

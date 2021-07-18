@@ -56,7 +56,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
            holder.stepTextView.setText(shortDes);
            if (mLandscapeModed) {
                holder.itemView.findViewById(R.id.fast_food_background).setVisibility(View.INVISIBLE);
-               if (position == rowNo) holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+               if (position == rowNo) holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.secondaryDarkColor));
                else  holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.lightStepColor));
                holder.itemView.setOnClickListener(v -> {
                    viewStepInterface.onClickStep(position);
@@ -68,7 +68,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
                                holder.itemView.getHeight() / 2,
                                0,
                                finalRadius);
-                       holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+                       holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.secondaryDarkColor));
                        animator.start();
                    }
                    notifyDataSetChanged();
