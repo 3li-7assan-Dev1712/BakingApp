@@ -29,7 +29,8 @@
         <activity android:name=".InstructionsActivity" />
         <activity
             android:name=".IngredientsActivity"
-            android:label="@string/ingredient_activity_label" />
+            android:label="@string/ingredient_activity_label"
+            android:theme="@style/IngredientsTheme"/>
         <activity
             android:name=".CookRecipeActivity"
             android:label="@string/cook_recipe_activity_label"

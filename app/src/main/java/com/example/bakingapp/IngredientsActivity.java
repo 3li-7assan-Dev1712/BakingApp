@@ -1,25 +1,25 @@
 package com.example.bakingapp;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.animation.AnimationUtils;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
+import android.transition.Slide;
 
 import com.example.bakingapp.Adapters.IngredientsAdapter;
 import com.example.bakingapp.Entries.IngredientEntry;
-import com.example.bakingapp.Entries.StepsEntry;
-import com.example.bakingapp.JsonRef.JsonUtils;
 import com.example.bakingapp.ViewModels.LoadIngredientsViewModel;
 import com.example.bakingapp.ViewModels.LoadIngredientsViewModelFactory;
-import com.example.bakingapp.ViewModels.LoadStepsViewModel;
-import com.example.bakingapp.ViewModels.LoadStepsViewModelFactory;
 import com.example.bakingapp.database.BakingDatabase;
+import com.google.android.exoplayer2.util.Util;
 
 import java.util.List;
 
@@ -32,6 +32,15 @@ public class IngredientsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredients);
+        if (Util.SDK_INT >= 21) {
+            Slide slide = new Slide(Gravity.BOTTOM);
+            slide.addTarget(findViewById(R.id.ingredientsRecycler));
+            slide.setInterpolator(AnimationUtils.loadInterpolator(this,
+                    android.R.interpolator.linear_out_slow_in));
+            slide.setDuration(3000);
+            getWindow().setEnterTransition(slide);
+            Toast.makeText(this, "transition works", Toast.LENGTH_SHORT).show();
+        }
         RecyclerView ingredientsRecycler = findViewById(R.id.ingredientsRecycler);
         Intent intent  = getIntent();
         if (intent != null){
@@ -56,5 +65,11 @@ public class IngredientsActivity extends AppCompatActivity {
             */
            ingredientsAdapter.setIngredientsList(ingredientEntries);
        });
+    }
+
+    @Override
+    public void onEnterAnimationComplete() {
+
+        super.onEnterAnimationComplete();
     }
 }
