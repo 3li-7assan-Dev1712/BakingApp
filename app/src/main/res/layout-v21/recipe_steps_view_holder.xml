@@ -3,7 +3,11 @@
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recipe_steps_view_holder_container"
+    android:elevation="4dp"
+    android:transitionName="@string/transition_name"
+    android:stateListAnimator="@animator/raise_view_holder">
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

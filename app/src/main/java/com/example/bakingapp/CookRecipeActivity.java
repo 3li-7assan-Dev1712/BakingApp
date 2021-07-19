@@ -1,11 +1,14 @@
 package com.example.bakingapp;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.transition.Slide;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -80,17 +83,6 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
                 manager.beginTransaction().add(R.id.frameLayout, stepVideoFragment).commit();
             }
 
-
-            if (Util.SDK_INT >= 21) {
-                Slide slide = new Slide(Gravity.BOTTOM);
-                slide.addTarget(R.id.constraint_fragment);
-                slide.setInterpolator(AnimationUtils.loadInterpolator(this,
-                        android.R.interpolator.linear_out_slow_in));
-                slide.setDuration(2000);
-                getWindow().setEnterTransition(slide);
-                Toast.makeText(this, "transition works", Toast.LENGTH_SHORT).show();
-            }
-
         });
 
         /*implementing the collapsing layout */
@@ -101,12 +93,29 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
             CollapsingToolbarLayout toolbarLayout = findViewById(R.id.collapsing_toolbar_layout);
             toolbarLayout.setTitle(JsonConstants.getRecipeName(recipeId));
             ImageView imageView = findViewById(R.id.recipe_collapsing_image);
-            imageView.setImageResource(JsonConstants.getImageId(recipeId));
             Toast.makeText(this, "True", Toast.LENGTH_SHORT).show();
+            imageView.setImageResource(JsonConstants.getImageId(recipeId));
             Log.d(TAG, "True");
 
         }
     }
+
+/*
+    @Override
+    public void onEnterAnimationComplete() {
+        super.onEnterAnimationComplete();
+        if (Util.SDK_INT >= 21) {
+            Slide slide = new Slide(Gravity.END);
+            slide.addTarget(findViewById(R.id.constraint_fragment));
+            slide.setInterpolator(AnimationUtils.loadInterpolator(this,
+                    android.R.interpolator.linear_out_slow_in));
+            slide.setDuration(3000);
+            getWindow().setEnterTransition(slide);
+            Toast.makeText(this, "transition works", Toast.LENGTH_SHORT).show();
+        }
+    }
+*/
+
     @Override
     public void onClickStep(int id) {
         if (mTowPane){
@@ -124,7 +133,15 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
             Intent goToInstructions = new Intent(CookRecipeActivity.this, InstructionsActivity.class);
             goToInstructions.putExtra(getString(R.string.ingredientIdKey), id);
             goToInstructions.putParcelableArrayListExtra("ali", (ArrayList<? extends Parcelable>) stepsEntries);
-            startActivity(goToInstructions);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this,
+                        findViewById(R.id.recipe_steps_view_holder_container),
+                        findViewById(R.id.recipe_steps_view_holder_container).getTransitionName()).toBundle();
+                startActivity(goToInstructions, bundle);
+            }else{
+                startActivity(goToInstructions);
+            }
+
         }
     }
 }
