@@ -6,4 +6,7 @@
         android:animation="@animator/rotation"
         android:name="rotationGroup" />
 
+    <target
+        android:animation="@animator/path_to_cross"
+        android:name="v" />
 </animated-vector>
