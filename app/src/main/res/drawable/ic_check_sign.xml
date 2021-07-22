@@ -3,7 +3,18 @@
         android:height="24dp"
         android:viewportWidth="24.0"
         android:viewportHeight="24.0">
-    <path
+   <!-- <path
         android:fillColor="#ffDC6E5A"
-        android:pathData="M9,16.17L4.83,12l-1.42,1.41L9,19 21,7l-1.41,-1.41z"/>
+        android:pathData="M9,16.17L4.83,12l-1.42,1.41L9,19 21,7l-1.41,-1.41z"/>-->
+    <group
+        android:name="rotationGroup"
+        android:pivotX="300.0"
+        android:pivotY="300.0"
+        android:rotation="0.0" >
+        <path
+            android:name="v"
+            android:fillColor="#ffDC6E5A"
+            android:pathData="M9,16.17L4.83,12l-1.42,1.41L9,19 21,7l-1.41,-1.41z" />
+    </group>
+
 </vector>
