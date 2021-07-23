@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias=".8"
         android:textColor="@color/secondaryTextColor"
-        android:background="@drawable/button_background"
+        android:background="@drawable/ripple_effect"
         android:padding="16dp"
         android:fontFamily="sans-serif"
         android:text="@string/button_see_ingredients"

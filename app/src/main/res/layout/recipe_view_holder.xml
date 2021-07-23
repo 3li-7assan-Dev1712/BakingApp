@@ -17,7 +17,7 @@
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp"
     android:elevation="4dp"
-    >
+   >
 
     <!-- In the MainActivity I'm just going to put the recipes name so the user
      can choose their favorite one    -->
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        >
+        android:background="@drawable/view_holder_ripple" >
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
