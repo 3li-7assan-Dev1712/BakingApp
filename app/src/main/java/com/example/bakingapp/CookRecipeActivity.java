@@ -100,21 +100,6 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
         }
     }
 
-/*
-    @Override
-    public void onEnterAnimationComplete() {
-        super.onEnterAnimationComplete();
-        if (Util.SDK_INT >= 21) {
-            Slide slide = new Slide(Gravity.END);
-            slide.addTarget(findViewById(R.id.constraint_fragment));
-            slide.setInterpolator(AnimationUtils.loadInterpolator(this,
-                    android.R.interpolator.linear_out_slow_in));
-            slide.setDuration(3000);
-            getWindow().setEnterTransition(slide);
-            Toast.makeText(this, "transition works", Toast.LENGTH_SHORT).show();
-        }
-    }
-*/
 
     @Override
     public void onClickStep(int id) {
