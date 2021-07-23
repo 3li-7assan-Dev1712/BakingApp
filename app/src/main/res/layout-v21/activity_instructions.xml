@@ -23,7 +23,7 @@
         app:layout_constraintBottom_toTopOf="@id/navigationLinearLayout"
         android:layout_marginBottom="5dp"
         android:id="@+id/descriptionFragment"
-        />
+        android:transitionName="@string/transition_name"/>
     <LinearLayout
         android:id="@+id/navigationLinearLayout"
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:transitionName="@string/transition_name">
+       >
         <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"

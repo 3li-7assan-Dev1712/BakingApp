@@ -2,7 +2,6 @@ package com.example.bakingapp.Adapters;
 
 import android.animation.Animator;
 import android.content.Context;
-import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bakingapp.Entries.StepsEntry;
@@ -32,7 +30,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
     }
 
     public interface ViewStepInterface{
-        void onClickStep(int id);
+        void onClickStep(int id, View v);
     }
     public static ViewStepInterface viewStepInterface;
 
@@ -60,7 +58,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
                    holder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.lightStepColor));
                }
                holder.itemView.setOnClickListener(v -> {
-                   viewStepInterface.onClickStep(position);
+                   viewStepInterface.onClickStep(position, v);
                    rowNo = position;
                    if (Util.SDK_INT >= 22) {
                        int finalRadius = (int) Math.hypot(holder.itemView.getWidth() / 2f, holder.itemView.getHeight() / 2f);
@@ -96,7 +94,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
 
         @Override
         public void onClick(View v) {
-            viewStepInterface.onClickStep(getBindingAdapterPosition());
+            viewStepInterface.onClickStep(getBindingAdapterPosition(), v);
         }
     }
     public void setStepsList(List<StepsEntry> stepsEntries){

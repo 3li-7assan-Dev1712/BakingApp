@@ -5,11 +5,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.transition.Slide;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -28,7 +25,6 @@ import com.example.bakingapp.JsonRef.JsonConstants;
 import com.example.bakingapp.ViewModels.LoadStepsViewModel;
 import com.example.bakingapp.ViewModels.LoadStepsViewModelFactory;
 import com.example.bakingapp.database.BakingDatabase;
-import com.google.android.exoplayer2.util.Util;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.util.ArrayList;
@@ -102,7 +98,7 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
 
 
     @Override
-    public void onClickStep(int id) {
+    public void onClickStep(int id, View v) {
         if (mTowPane){
             /*will be implemented in the next commit*/
             FragmentManager manager = getSupportFragmentManager();
@@ -120,8 +116,8 @@ public class CookRecipeActivity extends AppCompatActivity implements StepsAdapte
             goToInstructions.putParcelableArrayListExtra("ali", (ArrayList<? extends Parcelable>) stepsEntries);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this,
-                        findViewById(R.id.recipe_steps_view_holder_container),
-                        findViewById(R.id.recipe_steps_view_holder_container).getTransitionName()).toBundle();
+                        v,
+                        v.getTransitionName()).toBundle();
                 startActivity(goToInstructions, bundle);
             }else{
                 startActivity(goToInstructions);
