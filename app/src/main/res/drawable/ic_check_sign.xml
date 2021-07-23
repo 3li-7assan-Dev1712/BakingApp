@@ -1,20 +1,20 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
         android:width="24dp"
         android:height="24dp"
-        android:viewportWidth="24.0"
-        android:viewportHeight="24.0">
+        android:viewportWidth="24"
+        android:viewportHeight="24">
    <!-- <path
         android:fillColor="#ffDC6E5A"
         android:pathData="M9,16.17L4.83,12l-1.42,1.41L9,19 21,7l-1.41,-1.41z"/>-->
     <group
         android:name="rotationGroup"
-        android:pivotX="300.0"
-        android:pivotY="300.0"
+        android:pivotX="12.0"
+        android:pivotY="12.0"
         android:rotation="0.0" >
         <path
             android:name="v"
             android:fillColor="#ffDC6E5A"
-            android:pathData="M9,16.17L4.83,12l-1.42,1.41L9,19 21,7l-1.41,-1.41z" />
+            android:pathData="M 3.4 13.4 L 6.2 16.2 L 9 19 L 21 7 L 19.6 5.6 L 16.95 8.25 L 14.3 10.9 L 11.65 13.55 L 9 16.2 L 9 16.2 L 4.8 12 L 4.1 12.7 L 3.4 13.4" />
     </group>
 
 </vector>

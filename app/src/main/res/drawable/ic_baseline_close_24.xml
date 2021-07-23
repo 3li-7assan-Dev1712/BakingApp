@@ -1,16 +1,18 @@
-<vector android:height="96dp" android:tint="#ffDC6E5A"
+<vector android:height="24dp" android:tint="#ffDC6E5A"
     android:viewportHeight="24" android:viewportWidth="24"
-    android:width="96dp"
+    android:width="24dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group
         android:name="rotationGroup"
-        android:pivotX="300.0"
-        android:pivotY="300.0"
+        android:pivotX="12.0"
+        android:pivotY="12.0"
         android:rotation="0.0" >
         <path
             android:name="v"
             android:fillColor="#ffDC6E5A"
-            android:pathData="M19,6.41L17.59,5 12,10.59 6.41,5 5,6.41 10.59,12 5,17.59 6.41,19 12,13.41 17.59,19 19,17.59 13.41,12z" />
+            android:strokeWidth="2"
+            android:strokeLineCap="square"
+            android:pathData="M 6.41 19 L 12 13.41 L 17.59 19 L 19 17.59 L 13.41 12 L 19 6.41 L 17.59 5 L 12 10.59 L 6.41 5 L 5 6.41 L 10.59 12 L 5 17.59 L 6.41 19" />
     </group>
 </vector>

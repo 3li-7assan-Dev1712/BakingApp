@@ -3,7 +3,7 @@
     <objectAnimator
         android:duration="350"
         android:propertyName="pathData"
-        android:valueFrom="M9,16.17L4.83,12l-1.42,1.41L9,19 21,7l-1.41,-1.41z"
-        android:valueTo="M19,6.41L17.59,5 12,10.59 6.41,5 5,6.41 10.59,12 5,17.59 6.41,19 12,13.41 17.59,19 19,17.59 13.41,12z"
+        android:valueFrom="M 6.41 19 L 12 13.41 L 17.59 19 L 19 17.59 L 13.41 12 L 19 6.41 L 17.59 5 L 12 10.59 L 6.41 5 L 5 6.41 L 10.59 12 L 5 17.59 L 6.41 19"
+        android:valueTo="M 3.4 13.4 L 6.2 16.2 L 9 19 L 21 7 L 19.6 5.6 L 16.95 8.25 L 14.3 10.9 L 11.65 13.55 L 9 16.2 L 9 16.2 L 4.8 12 L 4.1 12.7 L 3.4 13.4"
         android:valueType="pathType" />
 </set>

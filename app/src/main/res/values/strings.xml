@@ -24,4 +24,8 @@
     <string name="easy_step">Hey, this step is easy you can do it without a video!</string>
     <string name="todo">custome_buttons</string>
     <string name="transition_name">transition name</string>
+
+    <string name="path_tick">M 4.6 13.4 L 9 17.6 M 9 17.6 L 19.6 6.7</string>
+    <!--<string name="path_cross">M17.6,6.4 L6.4,17.6 M6.4,6.4 L17.6,17.6</string>-->
+    <string name="path_cross">M6.4,6.4 L17.6,17.6 M6.4,17.6 L17.6,6.4</string>
 </resources>

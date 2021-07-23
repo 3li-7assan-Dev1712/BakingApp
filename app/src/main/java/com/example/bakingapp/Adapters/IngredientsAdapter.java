@@ -1,12 +1,15 @@
 package com.example.bakingapp.Adapters;
 
 import android.content.Context;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +23,7 @@ import java.util.List;
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientViewHolder> {
     private static final String TAG = IngredientsAdapter.class.getSimpleName();
     private Context mContext;
+    public AnimatedVectorDrawable animation;
     private List<IngredientEntry> ingredientsList;
     public IngredientsAdapter(Context mContext, List<IngredientEntry> ingredientsList) {
         this.mContext = mContext;
@@ -55,17 +59,34 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
         holder.unitIcon.setImageResource(unitIcon);
         holder.unitLongName.setText(unitLongName);
-
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            animation = (AnimatedVectorDrawable) mContext.getDrawable(R.drawable.animated_cross_sign);
+            holder.ingredientChecked.setBackground(animation);
+            animation.start();
+        }
         holder.itemView.setOnClickListener(v -> {
-            if(holder.ingredientChecked.getVisibility() == View.GONE){
-                holder.ingredientChecked.setVisibility(View.VISIBLE);
-            }
-            else{
-                holder.ingredientChecked.setVisibility(View.GONE);
-            }
 
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                animation = (AnimatedVectorDrawable) mContext.getDrawable(R.drawable.animated_check_sign);
+                holder.ingredientChecked.setBackground(animation);
+                animation.start();
+                holder.ingredientChecked.setImageResource(R.drawable.ic_check_sign);
+                Toast.makeText(mContext, "animation", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        holder.itemView.setOnLongClickListener(v -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                animation = (AnimatedVectorDrawable) mContext.getDrawable(R.drawable.animated_cross_sign);
+                holder.ingredientChecked.setBackground(animation);
+                animation.start();
+                holder.ingredientChecked.setImageResource(R.drawable.ic_baseline_close_24);
+                Toast.makeText(mContext, "animation", Toast.LENGTH_SHORT).show();
+
+            }
+            return true;
         });
     }
 
